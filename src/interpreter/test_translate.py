@@ -1,6 +1,6 @@
 import pytest
 
-from .translate import tokenize_ipa, translate_ipa
+from .translate import tokenize_ipa, translate_ipa, translate_to_easy_ipa
 
 
 def test_translate():
@@ -8,5 +8,7 @@ def test_translate():
     print(s)
     a = translate_ipa(s)
     print(a)
+    i = translate_to_easy_ipa(s)
+    print(i)
 
     assert False
