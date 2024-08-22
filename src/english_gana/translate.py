@@ -64,7 +64,14 @@ def english_gana(word: str, ipa: str) -> str:
     arr: list[str] = []
 
     i, j = 0, 0
-    while i < len(word) and j < len(sound):
+
+    while True:
+        if j >= len(sound):
+            arr.append(f"[{word[i:]}]{{}}")
+            break
+        if i >= len(word):
+            break
+
         if word[i] == sound[j]:
             arr.append(word[i])
             i += 1
@@ -82,8 +89,10 @@ def english_gana(word: str, ipa: str) -> str:
                 arr.append(f"[{word[i]}]{{{sound[j]}}}")
             i += 1
             j += 1
+        elif i >= 1 and word[i] == word[i - 1]:
+            arr.append(word[i])
+            i += 1
         else:
-            # raise Exception(f"{word[i]} : {sound[j]}, not matched")
             arr.append(f"[{word[i]}]{{{sound[j]}}}")
             i += 1
             j += 1
