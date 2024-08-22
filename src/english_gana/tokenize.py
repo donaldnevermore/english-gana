@@ -17,12 +17,15 @@ def tokenize_ipa(txt: str) -> list[str]:
             i += 1
             continue
 
-        if ch == "ɜ" and sound[i + 1] == "ː":
+        if ch == "ɜ" and i + 1 < len(sound) and sound[i + 1] == "ː":
             arr.append(sound[i : i + 2])
-            i += 1
+            i += 2
+        elif ch == "ɔ" and i + 1 < len(sound) and sound[i + 1] == "ɪ":
+            arr.append(sound[i : i + 2])
+            i += 2
         else:
             arr.append(ch)
-        i += 1
+            i += 1
 
     return arr
 
