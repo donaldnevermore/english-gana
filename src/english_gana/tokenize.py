@@ -37,3 +37,7 @@ def remove_slash(s: str) -> str:
 def remove_pitch(s: str) -> str:
     r = s.replace("ˈ", "")
     return r.replace("ˌ", "")
+
+
+def remove_slash_pitch(s: str) -> str:
+    return remove_pitch(remove_slash(s))

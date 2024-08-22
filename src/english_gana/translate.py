@@ -1,4 +1,5 @@
 from .tokenize import tokenize_ipa
+from .translate_ipa import translate_ipa
 
 letter_to_english_gana = {
     "a": ["a", "ā", "ä"],
@@ -9,44 +10,6 @@ letter_to_english_gana = {
     "o": ["ä", "ō", "ö"],
     "u": ["u", "ū", "û", "ü"],
     "y": ["y", "ī"],
-}
-
-# different symbol, same sound.
-# just for reference
-special = {
-    "c": ["c", "c̄"],
-    "g": ["g", "ḡ"],
-    "o": ["o", "ō", "ö"],
-    "y": ["y", "ȳ"],
-}
-
-ipa_to_english_gana: dict[str, str] = {
-    "iː": "ï",
-    "ɪ": "i",
-    "ʊ": "û",
-    "uː": "ü",
-    "ə": "é",
-    "ɜː": "ë",
-    "ɔː": "ö",
-    "æ": "a",
-    "ʌ": "u",
-    "ɑː": "ä",
-    # diphthong
-    "eɪ": "ā",
-    "ɔɪ": "oi",
-    "aɪ": "ī",
-    "əʊ": "ō",
-    "aʊ": "ou",
-    "juː": "ū",
-    # consonant
-    "tʃ": "ch",
-    "dʒ": "j",
-    "θ": "th",
-    "ð": "t̂h",
-    "ʃ": "sh",
-    "ʒ": "ŝh",
-    "j": "y",
-    "ŋ": "ng",
 }
 
 
@@ -105,26 +68,6 @@ def english_gana(word: str, ipa: str) -> str:
             j += 1
 
     return "".join(arr)
-
-
-def translate_ipa(ipa: list[str]) -> list[str]:
-    """translate IPA to Engana symbols
-
-    Args:
-        ipa (list[str]): _description_
-
-    Returns:
-        list[str]: _description_
-    """
-    s: list[str] = []
-
-    for ch in ipa:
-        if ch in ipa_to_english_gana:
-            s.append(ipa_to_english_gana[ch])
-        else:
-            s.append(ch)
-
-    return s
 
 
 def english_gana_mark(ipa: str) -> list[str]:

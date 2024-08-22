@@ -28,6 +28,16 @@ ipa_to_easy_mark: dict[str, str] = {
 }
 
 
+# different symbol, same sound.
+# just for reference
+special = {
+    "c": ["c", "c̄"],
+    "g": ["g", "ḡ"],
+    "o": ["o", "ō", "ö"],
+    "y": ["y", "ȳ"],
+}
+
+
 def translate_to_easy_mark(ipa: list[str]) -> list[str]:
     s: list[str] = []
 

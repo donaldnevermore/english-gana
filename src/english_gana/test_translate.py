@@ -1,31 +1,12 @@
 import pytest
 
-from .tokenize import remove_pitch, remove_slash, tokenize_ipa
-from .translate import (
-    english_gana,
-    english_gana_mark,
-    tokenize_ipa,
-    translate_ipa,
-)
+from .translate import english_gana, english_gana_mark
 
 
 def test_english_gana_mark():
     txt = "/ˈpɜːrfɪkt/"
     s = english_gana_mark(txt)
     assert "".join(s) == "përfikt"
-
-
-def test_tokenize_ipa():
-    txt = "/ˈpɜːrfɪkt/"
-    s = tokenize_ipa(txt)
-    assert "".join(s) == remove_pitch(remove_slash(txt))
-
-
-def test_translate_ipa():
-    txt = "/ˈpɜːrfɪkt/"
-    s = tokenize_ipa(txt)
-    x = translate_ipa(s)
-    assert "".join(x) == "përfikt"
 
 
 def test_english_gana():
