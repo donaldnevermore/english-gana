@@ -17,7 +17,7 @@ def tokenize_ipa(txt: str) -> list[str]:
             i += 1
             continue
 
-        if ch == "ɜ" and i + 1 < len(sound) and sound[i + 1] == "ː":
+        if ch in ["ɜ", "ɑ"] and i + 1 < len(sound) and sound[i + 1] == "ː":
             arr.append(sound[i : i + 2])
             i += 2
         elif ch == "ɔ" and i + 1 < len(sound) and sound[i + 1] == "ɪ":

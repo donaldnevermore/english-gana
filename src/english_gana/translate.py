@@ -32,7 +32,10 @@ def english_gana(word: str, ipa: str) -> str:
         if i >= len(word):
             break
         if j >= len(sound):
-            arr.append(f"[{word[i:]}]{{}}")
+            if i >= 1 and word[i] == word[i - 1]:
+                arr.append(word[i:])
+            else:
+                arr.append(f"[{word[i:]}]{{}}")
             break
 
         if word[i] == sound[j]:

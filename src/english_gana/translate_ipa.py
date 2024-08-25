@@ -25,6 +25,7 @@ ipa_to_english_gana: dict[str, str] = {
     "ʒ": "ŝh",
     "j": "y",
     "ŋ": "ng",
+    "ɡ": "g",
 }
 
 

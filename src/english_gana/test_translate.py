@@ -28,3 +28,17 @@ def test_boy():
     b = "/bɔɪ/"
     r = english_gana(a, b)
     assert r == "boy"
+
+
+def test_car():
+    a = "car"
+    b = "/kɑːr/"
+    r = english_gana(a, b)
+    assert r == "c[a]{ä}r"
+
+
+def test_egg():
+    a = "egg"
+    b = "/eɡ/"
+    r = english_gana(a, b)
+    assert r == "egg"

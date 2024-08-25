@@ -23,3 +23,10 @@ def test_boy():
     s = tokenize_ipa(txt)
     x = translate_ipa(s)
     assert "".join(x) == "boi"
+
+
+def test_egg():
+    txt = "/eɡ/"
+    s = tokenize_ipa(txt)
+    x = translate_ipa(s)
+    assert "".join(x) == "eg"

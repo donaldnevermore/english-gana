@@ -13,3 +13,9 @@ def test_tokenize_boy():
     b = "/bɔɪ/"
     s = tokenize_ipa(b)
     assert "".join(s) == remove_slash_pitch(b)
+
+
+def test_tokenize_egg():
+    b = "/eɡ/"
+    s = tokenize_ipa(b)
+    assert "".join(s) == remove_slash_pitch(b)
