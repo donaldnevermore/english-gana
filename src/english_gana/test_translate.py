@@ -4,9 +4,9 @@ from .translate import english_gana, english_gana_mark
 
 
 def test_english_gana_mark():
-    txt = "/ˈpɜːrfɪkt/"
-    s = english_gana_mark(txt)
-    assert "".join(s) == "përfikt"
+    a = "/ˈpɜːrfɪkt/"
+    b = english_gana_mark(a)
+    assert "".join(b) == "përfikt"
 
 
 def test_english_gana():

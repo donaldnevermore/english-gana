@@ -4,7 +4,7 @@ from .tokenize import tokenize_ipa
 from .translate_ipa import translate_ipa
 
 
-def test_translate_perfect():
+def test_perfect():
     txt = "/ˈpɜːrfɪkt/"
     s = tokenize_ipa(txt)
     x = translate_ipa(s)
