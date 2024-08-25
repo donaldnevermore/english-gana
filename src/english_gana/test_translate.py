@@ -42,3 +42,10 @@ def test_egg():
     b = "/eɡ/"
     r = english_gana(a, b)
     assert r == "egg"
+
+
+def test_fish():
+    a = "fish"
+    b = "/fɪʃ/"
+    r = english_gana(a, b)
+    assert r == "fish"

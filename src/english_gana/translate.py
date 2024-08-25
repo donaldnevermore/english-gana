@@ -14,17 +14,18 @@ letter_to_english_gana = {
 
 
 def english_gana(word: str, ipa: str) -> str:
-    """translate to Engana
+    """translate to English Gana
 
     Args:
         word (str): _description_
-        sound (str): _description_
+        ipa (str): _description_
 
     Returns:
         str: _description_
     """
+
     sound = english_gana_mark(ipa)
-    arr: list[str] = []
+    result: list[str] = []
 
     i, j = 0, 0
 
@@ -33,13 +34,13 @@ def english_gana(word: str, ipa: str) -> str:
             break
         if j >= len(sound):
             if i >= 1 and word[i] == word[i - 1]:
-                arr.append(word[i:])
+                result.append(word[i:])
             else:
-                arr.append(f"[{word[i:]}]{{}}")
+                result.append(f"[{word[i:]}]{{}}")
             break
 
         if word[i] == sound[j]:
-            arr.append(word[i])
+            result.append(word[i])
             i += 1
             j += 1
         elif (
@@ -48,29 +49,34 @@ def english_gana(word: str, ipa: str) -> str:
         ):
             if word[i] == "c":
                 if sound[j] == "k":
-                    arr.append(word[i])
+                    result.append(word[i])
                 else:
-                    arr.append(f"[{word[i]}]{{c̄}}")
+                    result.append(f"[{word[i]}]{{c̄}}")
                 i += 1
                 j += 1
             else:
-                arr.append(f"[{word[i]}]{{{sound[j]}}}")
+                result.append(f"[{word[i]}]{{{sound[j]}}}")
                 i += 1
                 j += 1
         elif word[i] == "o":
             if sound[j] == "oi" and i + 1 < len(word) and word[i + 1] == "y":
-                arr.append(word[i : i + 2])
+                result.append(word[i : i + 2])
+                i += 2
+                j += 2
+        elif word[i] == "s":
+            if sound[j] == "sh" and i + 1 < len(word) and word[i + 1] == "h":
+                result.append(word[i : i + 2])
                 i += 2
                 j += 2
         elif i >= 1 and word[i] == word[i - 1]:
-            arr.append(word[i])
+            result.append(word[i])
             i += 1
         else:
-            arr.append(f"[{word[i]}]{{{sound[j]}}}")
+            result.append(f"[{word[i]}]{{{sound[j]}}}")
             i += 1
             j += 1
 
-    return "".join(arr)
+    return "".join(result)
 
 
 def english_gana_mark(ipa: str) -> list[str]:
