@@ -1,4 +1,4 @@
-ipa_to_english_gana: dict[str, str] = {
+ipa_to_english_gana = {
     "iː": "ï",
     "ɪ": "i",
     "ʊ": "û",
@@ -30,7 +30,7 @@ ipa_to_english_gana: dict[str, str] = {
 
 
 def translate_ipa(ipa: list[str]) -> list[str]:
-    """translate IPA to English gana symbols
+    """translate IPA to English Gana symbols
 
     Args:
         ipa (list[str]): _description_

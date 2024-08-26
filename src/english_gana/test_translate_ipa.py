@@ -1,7 +1,7 @@
 import pytest
 
-from .tokenize import tokenize_ipa
-from .translate_ipa import translate_ipa
+from english_gana.tokenize import tokenize_ipa
+from english_gana.translate_ipa import translate_ipa
 
 
 def test_perfect():

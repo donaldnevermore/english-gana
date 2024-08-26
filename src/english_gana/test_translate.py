@@ -1,6 +1,6 @@
 import pytest
 
-from .translate import english_gana, english_gana_mark
+from english_gana.translate import english_gana, english_gana_mark
 
 
 def test_english_gana_mark():

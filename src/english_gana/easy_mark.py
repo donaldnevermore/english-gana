@@ -1,4 +1,4 @@
-ipa_to_easy_mark: dict[str, str] = {
+ipa_to_easy_mark = {
     "iː": "ii",
     "ɪ": "i",
     "ʊ": "u",

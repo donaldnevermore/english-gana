@@ -1,10 +1,10 @@
-from .translate import english_gana
+from english_gana.translate import english_gana
 
-data: dict[str, str] = {"perfect": "pɜːrfɪkt"}
+data = {"perfect": "pɜːrfɪkt"}
 
 
 def main() -> int:
     for k, v in data.items():
-        r = english_gana(k, v)
-        print(r)
+        res = english_gana(k, v)
+        print(res)
     return 0
