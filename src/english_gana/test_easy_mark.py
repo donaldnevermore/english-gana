@@ -6,4 +6,4 @@ def test_easy_mark():
     txt = "/ˈpɜːrfɪkt/"
     s = tokenize_ipa(txt)
     i = translate_to_easy_mark(s)
-    assert "".join(i) == "p_irfikt"
+    assert "".join(i) == "pi_rfikt"

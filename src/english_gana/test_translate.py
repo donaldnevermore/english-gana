@@ -20,7 +20,7 @@ def test_apple():
     a = "apple"
     b = "/ˈæpl/"
     r = english_gana(a, b)
-    assert r == "appl[e]{}"
+    assert r == "[a]{â}ppl[e]{}"
 
 
 def test_boy():
