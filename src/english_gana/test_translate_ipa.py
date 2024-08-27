@@ -30,3 +30,10 @@ def test_egg():
     s = tokenize_ipa(txt)
     x = translate_ipa(s)
     assert "".join(x) == "eg"
+
+
+def test_girl():
+    txt = "/ɡɜːrl/"
+    s = tokenize_ipa(txt)
+    x = translate_ipa(s)
+    assert "".join(x) == "gërl"

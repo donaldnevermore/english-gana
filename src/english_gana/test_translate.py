@@ -49,3 +49,10 @@ def test_fish():
     b = "/fɪʃ/"
     r = english_gana(a, b)
     assert r == "fish"
+
+
+def test_girl():
+    a = "girl"
+    b = "/ɡɜːrl/"
+    r = english_gana(a, b)
+    assert r == "g[i]{ë}rl"
