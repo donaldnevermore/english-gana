@@ -2,13 +2,13 @@ from english_gana.tokenize import tokenize_ipa
 from english_gana.translate_ipa import translate_ipa
 
 letter_to_english_gana = {
-    "a": ["a", "ā", "ä"],
+    "a": ["â", "ā", "ä"],
     "c": ["k", "s"],
     "e": ["e", "ï", "ë"],
     "g": ["g", "j"],
     "i": ["i", "ī", "ï"],
     "o": ["ä", "ō", "ö"],
-    "u": ["u", "ū", "û", "ü"],
+    "u": ["û", "ū", "u", "ü"],
     "y": ["y", "ī"],
 }
 
@@ -42,7 +42,7 @@ class EnglishGana:
     def match_two_letters(self) -> None:
         self.result.append(self.word[self.i : self.i + 2])
         self.i += 2
-        self.j += 2
+        self.j += 1
 
     def is_same_before(self) -> bool:
         # Is the letter before the same as the current letter?
@@ -89,6 +89,12 @@ class EnglishGana:
                     self.sound_j() == "oi"
                     and self.i + 1 < len(self.word)
                     and self.word[self.i + 1] == "y"
+                ):
+                    self.match_two_letters()
+                elif (
+                    self.sound_j() == "au"
+                    and self.i + 1 < len(self.word)
+                    and self.word[self.i + 1] in ["u", "w"]
                 ):
                     self.match_two_letters()
                 else:

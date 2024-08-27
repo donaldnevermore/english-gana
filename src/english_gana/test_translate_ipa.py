@@ -37,3 +37,10 @@ def test_girl():
     s = tokenize_ipa(txt)
     x = translate_ipa(s)
     assert "".join(x) == "gërl"
+
+
+def test_house():
+    txt = "/haʊs/"
+    s = tokenize_ipa(txt)
+    x = translate_ipa(s)
+    assert "".join(x) == "haus"

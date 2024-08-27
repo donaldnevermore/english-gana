@@ -11,6 +11,7 @@ def tokenize_ipa(txt: str) -> list[str]:
     sound = remove_slash(txt)
 
     i: int = 0
+
     while i < len(sound):
         ch: str = sound[i]
         if ch in ["ˈ", "ˌ"]:
@@ -21,6 +22,9 @@ def tokenize_ipa(txt: str) -> list[str]:
             arr.append(sound[i : i + 2])
             i += 2
         elif ch == "ɔ" and i + 1 < len(sound) and sound[i + 1] == "ɪ":
+            arr.append(sound[i : i + 2])
+            i += 2
+        elif ch == "a" and i + 1 < len(sound) and sound[i + 1] == "ʊ":
             arr.append(sound[i : i + 2])
             i += 2
         else:

@@ -56,3 +56,10 @@ def test_girl():
     b = "/ɡɜːrl/"
     r = english_gana(a, b)
     assert r == "g[i]{ë}rl"
+
+
+def test_house():
+    a = "house"
+    b = "/haʊs/"
+    r = english_gana(a, b)
+    assert r == "hous[e]{}"
