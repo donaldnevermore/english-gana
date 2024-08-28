@@ -9,7 +9,7 @@ letter_to_english_gana = {
     "i": ["i", "ī", "ï"],
     "o": ["ä", "ō", "ö"],
     "u": ["û", "ū", "u", "ü"],
-    "y": ["y", "ī"],
+    "y": ["y", "i", "ī"],
 }
 
 
@@ -79,7 +79,7 @@ class EnglishGana:
                     if self.sound_j() == "k":
                         self.match_a_letter()
                     else:
-                        self.result.append(f"[{self.word_i()}]{{c̄}}")
+                        self.result.append(f"[{self.word_i()}]{{s}}")
                         self.i += 1
                         self.j += 1
                 else:

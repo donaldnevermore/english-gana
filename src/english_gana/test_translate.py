@@ -9,7 +9,7 @@ def test_english_gana_mark():
     assert "".join(b) == "përfikt"
 
 
-def test_english_gana():
+def test_perfect():
     a = "perfect"
     b = "/ˈpɜːrfɪkt/"
     r = english_gana(a, b)
