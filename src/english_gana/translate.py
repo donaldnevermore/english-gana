@@ -4,12 +4,12 @@ from english_gana.translate_ipa import translate_ipa
 letter_to_english_gana = {
     "a": ["â", "ā", "ä"],
     "c": ["k", "s"],
-    "e": ["e", "ï", "ë"],
-    "g": ["g", "j"],
-    "i": ["i", "ī", "ï"],
+    "e": ["i", "ï", "ë"],
+    "g": ["j"],
+    "i": ["ī", "ï"],
     "o": ["ä", "ō", "ö"],
-    "u": ["û", "ū", "u", "ü"],
-    "y": ["y", "i", "ī"],
+    "u": ["û", "ū", "ü"],
+    "y": ["i", "ī"],
 }
 
 
@@ -75,13 +75,8 @@ class EnglishGana:
                 self.word[self.i] in letter_to_english_gana
                 and self.sound[self.j] in letter_to_english_gana[self.word[self.i]]
             ):
-                if self.word_i() == "c":
-                    if self.sound_j() == "k":
-                        self.match_a_letter()
-                    else:
-                        self.result.append(f"[{self.word_i()}]{{s}}")
-                        self.i += 1
-                        self.j += 1
+                if self.word_i() == "c" and self.sound_j() == "k":
+                    self.match_a_letter()
                 else:
                     self.match_a_ruby()
             elif self.word_i() == "o":

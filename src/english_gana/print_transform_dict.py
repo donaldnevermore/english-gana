@@ -1,21 +1,21 @@
 from english_gana.translate_ipa import ipa_to_english_gana
 
 letter_to_ipa = {
-    "a": ["æ", "eɪ", "ɑː"],
+    "a": ["a", "æ", "eɪ", "ɑː"],
     # b
     "c": ["k", "s"],
     # d
-    "e": ["e", "iː", "ɜː"],
+    "e": ["ɪ", "e", "iː", "ɜː"],
     # f
     "g": ["g", "dʒ"],
     # h
     "i": ["ɪ", "aɪ", "iː"],
     # j, k, l, m, n
-    "o": ["ɑː", "əʊ", "ɔː"],
+    "o": ["ɒ", "ɑː", "əʊ", "ɔː"],
     # p, q, r, s, t
     "u": ["ʌ", "juː", "ʊ", "uː"],
     # v, w, x
-    "y": ["j", "i", "aɪ"],
+    "y": ["j", "ɪ", "i", "aɪ"],
     # z
 }
 
@@ -34,3 +34,6 @@ def print_transform_dict() -> None:
         d[key] = arr
 
     print(d)
+
+
+print_transform_dict()
