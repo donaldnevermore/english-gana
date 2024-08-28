@@ -12,6 +12,32 @@ letter_to_english_gana = {
     "y": ["i", "ī"],
 }
 
+vowels = ["a", "e", "i", "o", "u", "y"]
+vowel_sounds = [
+    "a",
+    "â",
+    "ā",
+    "ä",
+    "á",
+    "e",
+    "ë",
+    "ē",
+    "é",
+    "i",
+    "ī",
+    "ï",
+    "í",
+    "o",
+    "ō",
+    "ö",
+    "ó",
+    "u",
+    "û",
+    "ū",
+    "ü",
+    "ú",
+]
+
 
 def english_gana_mark(ipa: str) -> list[str]:
     s = tokenize_ipa(ipa)
@@ -22,6 +48,7 @@ class EnglishGana:
     word: str = ""
     sound: list[str] = []
     result: list[str] = []
+    omit: int | None = None
     i: int = 0
     j: int = 0
 
@@ -48,6 +75,13 @@ class EnglishGana:
         # Is the letter before the same as the current letter?
         return self.i >= 1 and self.word[self.i] == self.word[self.i - 1]
 
+    def handle_omit(self) -> None:
+        if self.omit is None:
+            return
+
+        self.result.append(f"[{self.word[self.omit : self.i]}]{{}}")
+        self.omit = None
+
     def word_i(self) -> str:
         return self.word[self.i]
 
@@ -56,6 +90,7 @@ class EnglishGana:
 
     def parse(self) -> None:
         self.result = []
+        self.omit = None
         self.i = 0
         self.j = 0
 
@@ -70,11 +105,13 @@ class EnglishGana:
                 break
 
             if self.word_i() == self.sound_j():
+                self.handle_omit()
                 self.match_a_letter()
             elif (
-                self.word[self.i] in letter_to_english_gana
-                and self.sound[self.j] in letter_to_english_gana[self.word[self.i]]
+                self.word_i() in letter_to_english_gana
+                and self.sound_j() in letter_to_english_gana[self.word_i()]
             ):
+                self.handle_omit()
                 if self.word_i() == "c" and self.sound_j() == "k":
                     self.match_a_letter()
                 else:
@@ -106,8 +143,12 @@ class EnglishGana:
             elif self.is_same_before():
                 self.result.append(self.word[self.i])
                 self.i += 1
-            else:
+            elif self.word_i() in vowels and self.sound_j() in vowel_sounds:
                 self.match_a_ruby()
+            else:
+                if self.omit is None:
+                    self.omit = self.i
+                self.i += 1
 
 
 def english_gana(word: str, ipa: str) -> str:

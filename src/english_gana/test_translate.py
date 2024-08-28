@@ -63,3 +63,17 @@ def test_house():
     b = "/haʊs/"
     r = english_gana(a, b)
     assert r == "hous[e]{}"
+
+
+def test_juice():
+    a = "juice"
+    b = "/dʒuːs/"
+    r = english_gana(a, b)
+    assert r == "j[u]{ü}[i]{}[c]{s}[e]{}"
+
+
+def test_light():
+    a = "light"
+    b = "/laɪt/"
+    r = english_gana(a, b)
+    assert r == "l[i]{ī}[gh]{}t"
