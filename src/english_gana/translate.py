@@ -2,41 +2,23 @@ from english_gana.tokenize import tokenize_ipa
 from english_gana.translate_ipa import translate_ipa
 
 letter_to_english_gana = {
-    "a": ["â", "ā", "ä"],
+    "a": ["â", "ā", "ä", "e", "ö"],
     "c": ["k", "s"],
     "e": ["i", "ï", "ë"],
     "g": ["j"],
-    "i": ["ī", "ï"],
-    "o": ["ä", "ō", "ö"],
-    "u": ["û", "ū", "ü"],
+    "i": ["ī", "ï", "ë"],
+    "o": ["ä", "ō", "ö", "ü", "u", "û", "i"],
+    "u": ["û", "ū", "ü", "ë", "e"],
     "y": ["i", "ī"],
 }
 
-vowels = ["a", "e", "i", "o", "u", "y"]
-vowel_sounds = [
-    "a",
-    "â",
-    "ā",
-    "ä",
-    "á",
-    "e",
-    "ë",
-    "ē",
-    "é",
-    "i",
-    "ī",
-    "ï",
-    "í",
-    "o",
-    "ō",
-    "ö",
-    "ó",
-    "u",
-    "û",
-    "ū",
-    "ü",
-    "ú",
-]
+vowel_to_schwa = {
+    "a": "á",
+    "e": "é",
+    "i": "í",
+    "o": "ó",
+    "u": "ú",
+}
 
 
 def english_gana_mark(ipa: str) -> list[str]:
@@ -56,24 +38,38 @@ class EnglishGana:
         self.word = word
         self.sound = english_gana_mark(ipa)
 
-    def match_a_ruby(self) -> None:
-        self.result.append(f"[{self.word[self.i]}]{{{self.sound[self.j]}}}")
+    def eat_a_ruby(self) -> None:
+        self.handle_omit()
+        self.result.append(f"[{self.wordi()}]{{{self.soundj()}}}")
         self.i += 1
         self.j += 1
 
-    def match_a_letter(self) -> None:
-        self.result.append(self.word[self.i])
+    def eat_a_letter(self) -> None:
+        self.handle_omit()
+        self.result.append(self.wordi())
         self.i += 1
         self.j += 1
 
-    def match_two_letters(self) -> None:
+    def eat_a_schwa(self) -> None:
+        self.handle_omit()
+        schwa = vowel_to_schwa[self.wordi()]
+        self.result.append(f"[{self.wordi()}]{{{schwa}}}")
+        self.i += 1
+        self.j += 1
+
+    def eat_two_letters(self) -> None:
+        self.handle_omit()
         self.result.append(self.word[self.i : self.i + 2])
         self.i += 2
         self.j += 1
 
-    def is_same_before(self) -> bool:
-        # Is the letter before the same as the current letter?
-        return self.i >= 1 and self.word[self.i] == self.word[self.i - 1]
+    def is_same_consonant_after(self) -> bool:
+        # Is the consonant letter after the same as the current letter?
+        return (
+            self.i + 1 < len(self.word)
+            and self.wordi() not in vowel_to_schwa
+            and self.wordi() == self.word[self.i + 1]
+        )
 
     def handle_omit(self) -> None:
         if self.omit is None:
@@ -82,11 +78,43 @@ class EnglishGana:
         self.result.append(f"[{self.word[self.omit : self.i]}]{{}}")
         self.omit = None
 
-    def word_i(self) -> str:
+    def wordi(self) -> str:
+        if self.i >= len(self.word):
+            raise IndexError()
+
         return self.word[self.i]
 
-    def sound_j(self) -> str:
+    def soundj(self) -> str:
+        if self.j >= len(self.sound):
+            raise IndexError()
         return self.sound[self.j]
+
+    def next_is(self, letter: str) -> bool:
+        if self.i + 1 < len(self.word) and self.word[self.i + 1] == letter:
+            return True
+        else:
+            return False
+
+    def next_in(self, sounds: list[str]) -> bool:
+        if self.i + 1 < len(self.word) and self.word[self.i + 1] in sounds:
+            return True
+        else:
+            return False
+
+    def match(self, a: str, b: str) -> bool:
+        """Is a and b match word[i] and sound[j]?
+
+        Args:
+            a (str): _description_
+            b (str): _description_
+
+        Returns:
+            bool: _description_
+        """
+        if self.wordi() == a and self.soundj() == b:
+            return True
+        else:
+            return False
 
     def parse(self) -> None:
         self.result = []
@@ -98,53 +126,38 @@ class EnglishGana:
             if self.i >= len(self.word):
                 break
             if self.j >= len(self.sound):
-                if self.is_same_before():
-                    self.result.append(self.word[self.i :])
-                else:
-                    self.result.append(f"[{self.word[self.i :]}]{{}}")
+                self.result.append(f"[{self.word[self.i :]}]{{}}")
                 break
 
-            if self.word_i() == self.sound_j():
-                self.handle_omit()
-                self.match_a_letter()
+            if self.wordi() == self.soundj():
+                if self.is_same_consonant_after():
+                    self.eat_two_letters()
+                else:
+                    self.eat_a_letter()
+            elif self.wordi() in vowel_to_schwa and self.soundj() == "é":
+                self.eat_a_schwa()
             elif (
-                self.word_i() in letter_to_english_gana
-                and self.sound_j() in letter_to_english_gana[self.word_i()]
+                self.wordi() in letter_to_english_gana
+                and self.soundj() in letter_to_english_gana[self.wordi()]
             ):
-                self.handle_omit()
-                if self.word_i() == "c" and self.sound_j() == "k":
-                    self.match_a_letter()
+                if self.match("c", "k"):
+                    self.eat_a_letter()
+                elif self.match("e", "ï") and self.next_is("e"):
+                    self.eat_two_letters()
                 else:
-                    self.match_a_ruby()
-            elif self.word_i() == "o":
-                if (
-                    self.sound_j() == "oi"
-                    and self.i + 1 < len(self.word)
-                    and self.word[self.i + 1] == "y"
-                ):
-                    self.match_two_letters()
-                elif (
-                    self.sound_j() == "au"
-                    and self.i + 1 < len(self.word)
-                    and self.word[self.i + 1] in ["u", "w"]
-                ):
-                    self.match_two_letters()
+                    self.eat_a_ruby()
+            elif self.wordi() == "o":
+                if self.soundj() == "oi" and self.next_in(["i", "y"]):
+                    self.eat_two_letters()
+                elif self.soundj() == "au" and self.next_in(["u", "w"]):
+                    self.eat_two_letters()
                 else:
-                    self.match_a_ruby()
-            elif self.word_i() == "s":
-                if (
-                    self.sound_j() == "sh"
-                    and self.i + 1 < len(self.word)
-                    and self.word[self.i + 1] == "h"
-                ):
-                    self.match_two_letters()
+                    self.eat_a_ruby()
+            elif self.wordi() == "s":
+                if self.soundj() == "sh" and self.next_is("h"):
+                    self.eat_two_letters()
                 else:
-                    self.match_a_ruby()
-            elif self.is_same_before():
-                self.result.append(self.word[self.i])
-                self.i += 1
-            elif self.word_i() in vowels and self.sound_j() in vowel_sounds:
-                self.match_a_ruby()
+                    self.eat_a_ruby()
             else:
                 if self.omit is None:
                     self.omit = self.i

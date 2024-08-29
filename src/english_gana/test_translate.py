@@ -77,3 +77,24 @@ def test_light():
     b = "/laɪt/"
     r = english_gana(a, b)
     assert r == "l[i]{ī}[gh]{}t"
+
+
+def test_need():
+    a = "need"
+    b = "/niːd/"
+    r = english_gana(a, b)
+    assert r == "need"
+
+
+def test_dog():
+    a = "dog"
+    b = "/dɔːɡ/"
+    r = english_gana(a, b)
+    assert r == "d[o]{ö}g"
+
+
+def test_kite():
+    a = "kite"
+    b = "/kaɪt/"
+    r = english_gana(a, b)
+    assert r == "k[i]{ī}t[e]{}"

@@ -1,3 +1,40 @@
+two_parts = [
+    "iː",
+    "uː",
+    "ɜː",
+    "ɔː",
+    "ɑː",
+    "eɪ",
+    "ɔɪ",
+    "aɪ",
+    "əʊ",
+    "aʊ",
+    "tʃ",
+    "dʒ",
+]
+
+
+def is_two_parts(i: int, sound: str) -> bool:
+    if i + 1 >= len(sound):
+        return False
+
+    for elem in two_parts:
+        if sound[i : i + 2] == elem:
+            return True
+
+    return False
+
+
+def is_three_parts(i: int, sound: str) -> bool:
+    if i + 2 >= len(sound):
+        return False
+
+    if sound[i : i + 3] == "juː":
+        return True
+    else:
+        return False
+
+
 def tokenize_ipa(txt: str) -> list[str]:
     """divide into IPA symbols
 
@@ -7,34 +44,26 @@ def tokenize_ipa(txt: str) -> list[str]:
     Returns:
         list[str]: _description_
     """
-    arr: list[str] = []
+    result: list[str] = []
     sound = remove_slash(txt)
 
-    i: int = 0
-
+    i = 0
     while i < len(sound):
-        ch: str = sound[i]
-        if ch in ["ˈ", "ˌ"]:
+        if sound[i] in ["ˈ", "ˌ"]:
             i += 1
             continue
 
-        if ch in ["ɜ", "ɑ", "u"] and i + 1 < len(sound) and sound[i + 1] == "ː":
-            arr.append(sound[i : i + 2])
+        if is_two_parts(i, sound):
+            result.append(sound[i : i + 2])
             i += 2
-        elif ch == "ɔ" and i + 1 < len(sound) and sound[i + 1] == "ɪ":
-            arr.append(sound[i : i + 2])
-            i += 2
-        elif ch == "a" and i + 1 < len(sound) and sound[i + 1] in ["ʊ", "ɪ"]:
-            arr.append(sound[i : i + 2])
-            i += 2
-        elif ch == "d" and i + 1 < len(sound) and sound[i + 1] == "ʒ":
-            arr.append(sound[i : i + 2])
-            i += 2
+        elif is_three_parts(i, sound):
+            result.append(sound[i : i + 3])
+            i += 3
         else:
-            arr.append(ch)
+            result.append(sound[i])
             i += 1
 
-    return arr
+    return result
 
 
 def remove_slash(s: str) -> str:
