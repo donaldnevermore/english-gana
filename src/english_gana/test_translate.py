@@ -16,6 +16,13 @@ def test_perfect():
     assert r == "p[e]{ë}rf[e]{i}ct"
 
 
+def test_light():
+    a = "light"
+    b = "/laɪt/"
+    r = english_gana(a, b)
+    assert r == "l[i]{ī}[gh]{}t"
+
+
 def test_apple():
     a = "apple"
     b = "/ˈæpl/"
@@ -35,6 +42,13 @@ def test_car():
     b = "/kɑːr/"
     r = english_gana(a, b)
     assert r == "c[a]{ä}r"
+
+
+def test_dog():
+    a = "dog"
+    b = "/dɔːɡ/"
+    r = english_gana(a, b)
+    assert r == "d[o]{ö}g"
 
 
 def test_egg():
@@ -65,6 +79,13 @@ def test_house():
     assert r == "hous[e]{}"
 
 
+def test_ink():
+    a = "ink"
+    b = "/ɪŋk/"
+    r = english_gana(a, b)
+    assert r == "i[n]{ng}k"
+
+
 def test_juice():
     a = "juice"
     b = "/dʒuːs/"
@@ -72,11 +93,25 @@ def test_juice():
     assert r == "j[u]{ü}[i]{}[c]{s}[e]{}"
 
 
-def test_light():
-    a = "light"
-    b = "/laɪt/"
+def test_kite():
+    a = "kite"
+    b = "/kaɪt/"
     r = english_gana(a, b)
-    assert r == "l[i]{ī}[gh]{}t"
+    assert r == "k[i]{ī}t[e]{}"
+
+
+def test_like():
+    a = "like"
+    b = "/laɪk/"
+    r = english_gana(a, b)
+    assert r == "l[i]{ī}k[e]{}"
+
+
+def test_music():
+    a = "music"
+    b = "/ˈmjuːzɪk/"
+    r = english_gana(a, b)
+    assert r == "m[u]{ū}[s]{z}ic"
 
 
 def test_need():
@@ -86,15 +121,8 @@ def test_need():
     assert r == "need"
 
 
-def test_dog():
-    a = "dog"
-    b = "/dɔːɡ/"
+def test_ox():
+    a = "ox"
+    b = "/ɑːks/"
     r = english_gana(a, b)
-    assert r == "d[o]{ö}g"
-
-
-def test_kite():
-    a = "kite"
-    b = "/kaɪt/"
-    r = english_gana(a, b)
-    assert r == "k[i]{ī}t[e]{}"
+    assert r == "ox"

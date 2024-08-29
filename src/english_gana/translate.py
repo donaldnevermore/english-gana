@@ -7,8 +7,11 @@ letter_to_english_gana = {
     "e": ["i", "ï", "ë"],
     "g": ["j"],
     "i": ["ī", "ï", "ë"],
-    "o": ["ä", "ō", "ö", "ü", "u", "û", "i"],
+    "n": ["ng"],
+    "o": ["ä", "ō", "ö", "ü", "u", "û", "i", "oi", "au"],
+    "s": ["z", "sh"],
     "u": ["û", "ū", "ü", "ë", "e"],
+    "x": ["k"],
     "y": ["i", "ī"],
 }
 
@@ -39,26 +42,22 @@ class EnglishGana:
         self.sound = english_gana_mark(ipa)
 
     def eat_a_ruby(self) -> None:
-        self.handle_omit()
         self.result.append(f"[{self.wordi()}]{{{self.soundj()}}}")
         self.i += 1
         self.j += 1
 
     def eat_a_letter(self) -> None:
-        self.handle_omit()
         self.result.append(self.wordi())
         self.i += 1
         self.j += 1
 
     def eat_a_schwa(self) -> None:
-        self.handle_omit()
         schwa = vowel_to_schwa[self.wordi()]
         self.result.append(f"[{self.wordi()}]{{{schwa}}}")
         self.i += 1
         self.j += 1
 
     def eat_two_letters(self) -> None:
-        self.handle_omit()
         self.result.append(self.word[self.i : self.i + 2])
         self.i += 2
         self.j += 1
@@ -87,6 +86,7 @@ class EnglishGana:
     def soundj(self) -> str:
         if self.j >= len(self.sound):
             raise IndexError()
+
         return self.sound[self.j]
 
     def next_is(self, letter: str) -> bool:
@@ -95,8 +95,8 @@ class EnglishGana:
         else:
             return False
 
-    def next_in(self, sounds: list[str]) -> bool:
-        if self.i + 1 < len(self.word) and self.word[self.i + 1] in sounds:
+    def next_in(self, symbols: list[str]) -> bool:
+        if self.i + 1 < len(self.word) and self.word[self.i + 1] in symbols:
             return True
         else:
             return False
@@ -116,6 +116,26 @@ class EnglishGana:
         else:
             return False
 
+    def should_eat_two(self) -> bool:
+        if self.match("e", "ï") and self.next_is("e"):
+            return True
+        if self.match("o", "oi") and self.next_in(["i", "y"]):
+            return True
+        if self.match("o", "au") and self.next_in(["u", "w"]):
+            return True
+        if self.match("s", "sh") and self.next_is("h"):
+            return True
+
+        return False
+
+    def should_eat_one(self) -> bool:
+        if self.match("c", "k"):
+            return True
+        if self.match("o", "ä"):
+            return True
+
+        return False
+
     def parse(self) -> None:
         self.result = []
         self.omit = None
@@ -130,35 +150,34 @@ class EnglishGana:
                 break
 
             if self.wordi() == self.soundj():
+                self.handle_omit()
                 if self.is_same_consonant_after():
                     self.eat_two_letters()
                 else:
                     self.eat_a_letter()
             elif self.wordi() in vowel_to_schwa and self.soundj() == "é":
+                self.handle_omit()
                 self.eat_a_schwa()
             elif (
                 self.wordi() in letter_to_english_gana
                 and self.soundj() in letter_to_english_gana[self.wordi()]
             ):
-                if self.match("c", "k"):
+                self.handle_omit()
+                if (
+                    self.match("x", "k")
+                    and self.j + 1 < len(self.sound)
+                    and self.sound[self.j + 1] == "s"
+                ):
                     self.eat_a_letter()
-                elif self.match("e", "ï") and self.next_is("e"):
-                    self.eat_two_letters()
-                else:
-                    self.eat_a_ruby()
-            elif self.wordi() == "o":
-                if self.soundj() == "oi" and self.next_in(["i", "y"]):
-                    self.eat_two_letters()
-                elif self.soundj() == "au" and self.next_in(["u", "w"]):
-                    self.eat_two_letters()
-                else:
-                    self.eat_a_ruby()
-            elif self.wordi() == "s":
-                if self.soundj() == "sh" and self.next_is("h"):
+                    self.j += 1
+                elif self.should_eat_one():
+                    self.eat_a_letter()
+                elif self.should_eat_two():
                     self.eat_two_letters()
                 else:
                     self.eat_a_ruby()
             else:
+                # not match
                 if self.omit is None:
                     self.omit = self.i
                 self.i += 1
@@ -176,5 +195,8 @@ def english_gana(word: str, ipa: str) -> str:
     """
     eg = EnglishGana(word, ipa)
     eg.parse()
+
+    if len(eg.result) == 0:
+        raise Exception(f"The word `{word}` is not match with the IPA {ipa}.")
 
     return "".join(eg.result)
