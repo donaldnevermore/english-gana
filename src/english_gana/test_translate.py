@@ -126,3 +126,10 @@ def test_ox():
     b = "/ɑːks/"
     r = english_gana(a, b)
     assert r == "ox"
+
+
+def test_person():
+    a = "person"
+    b = "/ˈpɜːrsn/"
+    r = english_gana(a, b)
+    assert r == "p[e]{ë}rs[o]{ó}n"

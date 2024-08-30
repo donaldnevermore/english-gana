@@ -39,7 +39,22 @@ class EnglishGana:
 
     def __init__(self, word: str, ipa: str) -> None:
         self.word = word
-        self.sound = english_gana_mark(ipa)
+        marks = english_gana_mark(ipa)
+
+        # special cases like person, button, and final, etc.
+        if (
+            len(word) >= 2
+            and word[-1] in ["n", "l"]
+            and word[-2] in vowel_to_schwa
+            and len(marks) >= 2
+            and marks[-1] in ["n", "l"]
+            and marks[-2] not in vowel_to_schwa
+        ):
+            changedMarks = marks.copy()
+            changedMarks.insert(-1, "é")
+            self.sound = changedMarks
+        else:
+            self.sound = marks
 
     def eat_a_ruby(self) -> None:
         self.result.append(f"[{self.wordi()}]{{{self.soundj()}}}")
