@@ -133,3 +133,10 @@ def test_person():
     b = "/ˈpɜːrsn/"
     r = english_gana(a, b)
     assert r == "p[e]{ë}rs[o]{ó}n"
+
+
+def test_quick():
+    a = "quick"
+    b = "/kwɪk/"
+    r = english_gana(a, b)
+    assert r == "quick"

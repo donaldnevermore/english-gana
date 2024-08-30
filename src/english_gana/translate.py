@@ -9,6 +9,7 @@ letter_to_english_gana = {
     "i": ["ī", "ï", "ë"],
     "n": ["ng"],
     "o": ["ä", "ō", "ö", "ü", "u", "û", "i", "oi", "au"],
+    "q": ["k"],
     "s": ["z", "sh"],
     "u": ["û", "ū", "ü", "ë", "e"],
     "x": ["k"],
@@ -30,31 +31,35 @@ def english_gana_mark(ipa: str) -> list[str]:
 
 
 class EnglishGana:
-    word: str = ""
+    # the sound symbols of English Gana
     sound: list[str] = []
-    result: list[str] = []
+
+    # for silent letters
     omit: int | None = None
+
+    word: str = ""
+    result: list[str] = []
     i: int = 0
     j: int = 0
 
     def __init__(self, word: str, ipa: str) -> None:
         self.word = word
-        marks = english_gana_mark(ipa)
+        symbols = english_gana_mark(ipa)
 
         # special cases like person, button, and final, etc.
         if (
             len(word) >= 2
             and word[-1] in ["n", "l"]
             and word[-2] in vowel_to_schwa
-            and len(marks) >= 2
-            and marks[-1] in ["n", "l"]
-            and marks[-2] not in vowel_to_schwa
+            and len(symbols) >= 2
+            and symbols[-1] in ["n", "l"]
+            and symbols[-2] not in vowel_to_schwa
         ):
-            changedMarks = marks.copy()
-            changedMarks.insert(-1, "é")
-            self.sound = changedMarks
+            changed = symbols.copy()
+            changed.insert(-1, "é")
+            self.sound = changed
         else:
-            self.sound = marks
+            self.sound = symbols
 
     def eat_a_ruby(self) -> None:
         self.result.append(f"[{self.wordi()}]{{{self.soundj()}}}")
@@ -78,14 +83,12 @@ class EnglishGana:
         self.j += 1
 
     def is_same_consonant_after(self) -> bool:
-        # Is the consonant letter after the same as the current letter?
-        return (
-            self.i + 1 < len(self.word)
-            and self.wordi() not in vowel_to_schwa
-            and self.wordi() == self.word[self.i + 1]
-        )
+        # Is the consonant letter that comes after the same as the current letter?
+        letter = self.wordi()
+        return letter not in vowel_to_schwa and self.next_is(letter)
 
     def handle_omit(self) -> None:
+        """Handle silent letters in the middle of the word."""
         if self.omit is None:
             return
 
@@ -93,12 +96,28 @@ class EnglishGana:
         self.omit = None
 
     def wordi(self) -> str:
+        """the current letter
+
+        Raises:
+            IndexError: _description_
+
+        Returns:
+            str: _description_
+        """
         if self.i >= len(self.word):
             raise IndexError()
 
         return self.word[self.i]
 
     def soundj(self) -> str:
+        """the current sound symbol
+
+        Raises:
+            IndexError: _description_
+
+        Returns:
+            str: _description_
+        """
         if self.j >= len(self.sound):
             raise IndexError()
 
@@ -116,17 +135,23 @@ class EnglishGana:
         else:
             return False
 
-    def match(self, a: str, b: str) -> bool:
-        """Is a and b match word[i] and sound[j]?
+    def next_sound_is(self, letter: str) -> bool:
+        if self.j + 1 < len(self.sound) and self.sound[self.j + 1] == letter:
+            return True
+        else:
+            return False
+
+    def match(self, l: str, r: str) -> bool:
+        """Is l and r match word[i] and sound[j]?
 
         Args:
-            a (str): _description_
-            b (str): _description_
+            l (str): _description_
+            r (str): _description_
 
         Returns:
             bool: _description_
         """
-        if self.wordi() == a and self.soundj() == b:
+        if self.wordi() == l and self.soundj() == r:
             return True
         else:
             return False
@@ -139,6 +164,8 @@ class EnglishGana:
         if self.match("o", "au") and self.next_in(["u", "w"]):
             return True
         if self.match("s", "sh") and self.next_is("h"):
+            return True
+        if self.match("c", "k") and self.next_is("k"):
             return True
 
         return False
@@ -178,17 +205,21 @@ class EnglishGana:
                 and self.soundj() in letter_to_english_gana[self.wordi()]
             ):
                 self.handle_omit()
-                if (
-                    self.match("x", "k")
-                    and self.j + 1 < len(self.sound)
-                    and self.sound[self.j + 1] == "s"
+                if self.should_eat_two():
+                    # greedy algorithm: eat the longest letters first
+                    self.eat_two_letters()
+                elif (
+                    self.match("q", "k")
+                    and self.next_is("u")
+                    and self.next_sound_is("w")
                 ):
+                    self.eat_a_letter()
+                    self.eat_a_letter()
+                elif self.match("x", "k") and self.next_sound_is("s"):
                     self.eat_a_letter()
                     self.j += 1
                 elif self.should_eat_one():
                     self.eat_a_letter()
-                elif self.should_eat_two():
-                    self.eat_two_letters()
                 else:
                     self.eat_a_ruby()
             else:
