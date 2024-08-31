@@ -23,63 +23,11 @@ def test_light():
     assert r == "l[i]{ī}[gh]{}t"
 
 
-# starts with alphabet order
-
-
-def test_apple():
-    a = "apple"
-    b = "/ˈæpl/"
-    r = english_gana(a, b)
-    assert r == "[a]{â}ppl[e]{}"
-
-
-def test_boy():
-    a = "boy"
-    b = "/bɔɪ/"
-    r = english_gana(a, b)
-    assert r == "boy"
-
-
 def test_car():
     a = "car"
     b = "/kɑːr/"
     r = english_gana(a, b)
     assert r == "c[a]{ä}r"
-
-
-def test_dog():
-    a = "dog"
-    b = "/dɔːɡ/"
-    r = english_gana(a, b)
-    assert r == "d[o]{ö}g"
-
-
-def test_egg():
-    a = "egg"
-    b = "/eɡ/"
-    r = english_gana(a, b)
-    assert r == "egg"
-
-
-def test_fish():
-    a = "fish"
-    b = "/fɪʃ/"
-    r = english_gana(a, b)
-    assert r == "fish"
-
-
-def test_girl():
-    a = "girl"
-    b = "/ɡɜːrl/"
-    r = english_gana(a, b)
-    assert r == "g[i]{ë}rl"
-
-
-def test_house():
-    a = "house"
-    b = "/haʊs/"
-    r = english_gana(a, b)
-    assert r == "hous[e]{}"
 
 
 def test_ink():
@@ -96,53 +44,11 @@ def test_juice():
     assert r == "j[u]{ü}[i]{}[c]{s}[e]{}"
 
 
-def test_kite():
-    a = "kite"
-    b = "/kaɪt/"
-    r = english_gana(a, b)
-    assert r == "k[i]{ī}t[e]{}"
-
-
 def test_like():
     a = "like"
     b = "/laɪk/"
     r = english_gana(a, b)
     assert r == "l[i]{ī}k[e]{}"
-
-
-def test_music():
-    a = "music"
-    b = "/ˈmjuːzɪk/"
-    r = english_gana(a, b)
-    assert r == "m[u]{ū}[s]{z}ic"
-
-
-def test_need():
-    a = "need"
-    b = "/niːd/"
-    r = english_gana(a, b)
-    assert r == "need"
-
-
-def test_ox():
-    a = "ox"
-    b = "/ɑːks/"
-    r = english_gana(a, b)
-    assert r == "ox"
-
-
-def test_person():
-    a = "person"
-    b = "/ˈpɜːrsn/"
-    r = english_gana(a, b)
-    assert r == "p[e]{ë}rs[o]{ó}n"
-
-
-def test_quick():
-    a = "quick"
-    b = "/kwɪk/"
-    r = english_gana(a, b)
-    assert r == "quick"
 
 
 def test_rope():
@@ -199,3 +105,188 @@ def test_zoo():
     b = "/zuː/"
     r = english_gana(a, b)
     assert r == "zoo"
+
+
+# starts with alphabet order
+
+
+def test_apple():
+    a = "apple"
+    b = "/ˈæpl/"
+    r = english_gana(a, b)
+    assert r == "[a]{â}ppl[e]{}"
+
+
+def test_boy():
+    a = "boy"
+    b = "/bɔɪ/"
+    r = english_gana(a, b)
+    assert r == "boy"
+
+
+def test_cat():
+    a = "cat"
+    b = "/kæt/"
+    r = english_gana(a, b)
+    assert r == "c[a]{â}t"
+
+
+def test_dog():
+    a = "dog"
+    b = "/dɔːɡ/"
+    r = english_gana(a, b)
+    assert r == "d[o]{ö}g"
+
+
+def test_egg():
+    a = "egg"
+    b = "/eɡ/"
+    r = english_gana(a, b)
+    assert r == "egg"
+
+
+def test_fish():
+    a = "fish"
+    b = "/fɪʃ/"
+    r = english_gana(a, b)
+    assert r == "fish"
+
+
+def test_girl():
+    a = "girl"
+    b = "/ɡɜːrl/"
+    r = english_gana(a, b)
+    assert r == "g[i]{ë}rl"
+
+
+def test_house():
+    a = "house"
+    b = "/haʊs/"
+    r = english_gana(a, b)
+    assert r == "hous[e]{}"
+
+
+def test_input():
+    a = "input"
+    b = "/ˈɪnpʊt/"
+    r = english_gana(a, b)
+    assert r == "input"
+
+
+def test_join():
+    a = "join"
+    b = "/dʒɔɪn/"
+    r = english_gana(a, b)
+    assert r == "join"
+
+
+def test_kite():
+    a = "kite"
+    b = "/kaɪt/"
+    r = english_gana(a, b)
+    assert r == "k[i]{ī}t[e]{}"
+
+
+def test_lunch():
+    a = "lunch"
+    b = "/lʌntʃ/"
+    r = english_gana(a, b)
+    assert r == "l[u]{û}nch"
+
+
+def test_music():
+    a = "music"
+    b = "/ˈmjuːzɪk/"
+    r = english_gana(a, b)
+    assert r == "m[u]{ū}[s]{z}ic"
+
+
+def test_need():
+    a = "need"
+    b = "/niːd/"
+    r = english_gana(a, b)
+    assert r == "need"
+
+
+def test_ox():
+    a = "ox"
+    b = "/ɑːks/"
+    r = english_gana(a, b)
+    assert r == "ox"
+
+
+def test_person():
+    a = "person"
+    b = "/ˈpɜːrsn/"
+    r = english_gana(a, b)
+    assert r == "p[e]{ë}rs[o]{ó}n"
+
+
+def test_quick():
+    a = "quick"
+    b = "/kwɪk/"
+    r = english_gana(a, b)
+    assert r == "quick"
+
+
+def test_ruby():
+    a = "ruby"
+    b = "/ˈruːbi/"
+    r = english_gana(a, b)
+    assert r == "r[u]{ü}b[y]{i}"
+
+
+def test_ski():
+    a = "ski"
+    b = "/skiː/"
+    r = english_gana(a, b)
+    assert r == "sk[i]{ï}"
+
+
+def test_tooth():
+    a = "tooth"
+    b = "/tuːθ/"
+    r = english_gana(a, b)
+    assert r == "tooth"
+
+
+def test_update():
+    a = "update"
+    b = "/ˌʌpˈdeɪt/"
+    r = english_gana(a, b)
+    assert r == "[u]{û}pd[a]{ā}t[e]{}"
+
+
+def test_vowel():
+    a = "vowel"
+    b = "/ˈvaʊəl/"
+    r = english_gana(a, b)
+    assert r == "vow[e]{é}l"
+
+
+def test_weather():
+    a = "weather"
+    b = "/ˈweðər/"
+    r = english_gana(a, b)
+    assert r == "we[a]{}[t]{d}h[e]{é}r"
+
+
+def test_xenon():
+    a = "xenon"
+    b = "/ˈzenɑːn/"
+    r = english_gana(a, b)
+    assert r == "[x]{z}enon"
+
+
+def test_yard():
+    a = "yard"
+    b = "/jɑːrd/"
+    r = english_gana(a, b)
+    assert r == "y[a]{ä}rd"
+
+
+def test_zero():
+    a = "zero"
+    b = "/ˈzɪrəʊ/"
+    r = english_gana(a, b)
+    assert r == "z[e]{i}r[o]{ō}"

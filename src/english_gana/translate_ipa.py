@@ -10,13 +10,17 @@ ipa_to_english_gana = {
     "æ": "â",
     "ʌ": "û",
     "ɑː": "ä",
+    # e
+    # a only appears in au.
     # diphthong
     "eɪ": "ā",
     "ɔɪ": "oi",
     "aɪ": "ī",
     "əʊ": "ō",
     "aʊ": "au",
+    # ū = y + ü
     "juː": "ū",
+    # ir, ur, er
     # consonant
     "tʃ": "ch",
     "dʒ": "j",
@@ -27,6 +31,9 @@ ipa_to_english_gana = {
     "j": "y",
     "ŋ": "ng",
     "ɡ": "g",
+    # The letters below are the same as in English Gana symbols.
+    # b, d, f, h, k, l, m, n, p, r, s, t, v, w, z
+    # tr, dr, ts, dz
 }
 
 

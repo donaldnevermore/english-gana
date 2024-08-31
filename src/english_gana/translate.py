@@ -3,7 +3,7 @@ from english_gana.translate_ipa import translate_ipa
 
 letter_to_english_gana = {
     "a": ["â", "ā", "ä", "e", "ö"],
-    "c": ["k", "s"],
+    "c": ["k", "s", "ch"],
     "e": ["i", "ï", "ë"],
     "g": ["j"],
     "i": ["ī", "ï", "ë"],
@@ -11,8 +11,9 @@ letter_to_english_gana = {
     "o": ["ä", "ō", "ö", "ü", "u", "û", "i", "oi", "au"],
     "q": ["k"],
     "s": ["z", "sh"],
+    "t": ["th", "dh"],
     "u": ["û", "ū", "ü", "ë", "e"],
-    "x": ["k"],
+    "x": ["k", "z"],
     "y": ["i", "ī"],
 }
 
@@ -23,6 +24,28 @@ vowel_to_schwa = {
     "o": "ó",
     "u": "ú",
 }
+
+vowel_symbols = [
+    # a
+    "â",
+    "ā",
+    "ä",
+    "au",
+    "e",
+    "ë",
+    "i",
+    "ī",
+    "ï",
+    "o",
+    "ō",
+    "ö",
+    "ó",
+    "oi",
+    "u",
+    "û",
+    "ū",
+    "ü",
+]
 
 
 def english_gana_mark(ipa: str) -> list[str]:
@@ -53,7 +76,7 @@ class EnglishGana:
             and word[-2] in vowel_to_schwa
             and len(symbols) >= 2
             and symbols[-1] in ["n", "l"]
-            and symbols[-2] not in vowel_to_schwa
+            and symbols[-2] not in vowel_symbols
         ):
             changed = symbols.copy()
             changed.insert(-1, "ó")
@@ -157,13 +180,17 @@ class EnglishGana:
             return False
 
     def should_eat_two(self) -> bool:
-        if self.match("e", "ï") and self.next_is("e"):
+        if self.match("t", "th") and self.next_is("h"):
             return True
         if self.match("o", "oi") and self.next_in(["i", "y"]):
             return True
         if self.match("o", "au") and self.next_in(["u", "w"]):
             return True
         if self.match("s", "sh") and self.next_is("h"):
+            return True
+        if self.match("c", "ch") and self.next_is("h"):
+            return True
+        if self.match("e", "ï") and self.next_is("e"):
             return True
         if self.match("o", "ü") and self.next_is("o"):
             return True
@@ -188,6 +215,7 @@ class EnglishGana:
 
         while True:
             if self.i >= len(self.word):
+                self.handle_omit()
                 break
             if self.j >= len(self.sound):
                 self.result.append(f"[{self.word[self.i :]}]{{}}")
@@ -218,6 +246,10 @@ class EnglishGana:
                     self.result.append("qu")
                     self.i += 2
                     self.j += 2
+                elif self.match("t", "dh") and self.next_is("h"):
+                    self.result.append("[t]{d}h")
+                    self.i += 2
+                    self.j += 1
                 elif self.match("x", "k") and self.next_sound_is("s"):
                     self.result.append("x")
                     self.i += 1
@@ -245,8 +277,4 @@ def english_gana(word: str, ipa: str) -> str:
     """
     eg = EnglishGana(word, ipa)
     eg.parse()
-
-    if len(eg.result) == 0:
-        raise Exception(f"The word `{word}` is not match with the IPA {ipa}.")
-
     return "".join(eg.result)
