@@ -165,6 +165,8 @@ class EnglishGana:
             return True
         if self.match("s", "sh") and self.next_is("h"):
             return True
+        if self.match("o", "ü") and self.next_is("o"):
+            return True
         if self.match("c", "k") and self.next_is("k"):
             return True
 
@@ -213,11 +215,13 @@ class EnglishGana:
                     and self.next_is("u")
                     and self.next_sound_is("w")
                 ):
-                    self.eat_a_letter()
-                    self.eat_a_letter()
+                    self.result.append("qu")
+                    self.i += 2
+                    self.j += 2
                 elif self.match("x", "k") and self.next_sound_is("s"):
-                    self.eat_a_letter()
-                    self.j += 1
+                    self.result.append("x")
+                    self.i += 1
+                    self.j += 2
                 elif self.should_eat_one():
                     self.eat_a_letter()
                 else:

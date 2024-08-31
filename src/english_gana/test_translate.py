@@ -23,6 +23,9 @@ def test_light():
     assert r == "l[i]{ī}[gh]{}t"
 
 
+# starts with alphabet order
+
+
 def test_apple():
     a = "apple"
     b = "/ˈæpl/"
@@ -140,3 +143,59 @@ def test_quick():
     b = "/kwɪk/"
     r = english_gana(a, b)
     assert r == "quick"
+
+
+def test_rope():
+    a = "rope"
+    b = "/rəʊp/"
+    r = english_gana(a, b)
+    assert r == "r[o]{ō}p[e]{}"
+
+
+def test_sit():
+    a = "sit"
+    b = "/sɪt/"
+    r = english_gana(a, b)
+    assert r == "sit"
+
+
+def test_take():
+    a = "take"
+    b = "/teɪk/"
+    r = english_gana(a, b)
+    assert r == "t[a]{ā}k[e]{}"
+
+
+def test_up():
+    a = "up"
+    b = "/ʌp/"
+    r = english_gana(a, b)
+    assert r == "[u]{û}p"
+
+
+def test_voice():
+    a = "voice"
+    b = "/vɔɪs/"
+    r = english_gana(a, b)
+    assert r == "voi[c]{s}[e]{}"
+
+
+def test_water():
+    a = "water"
+    b = "/ˈwɔːtər/"
+    r = english_gana(a, b)
+    assert r == "w[a]{ö}t[e]{é}r"
+
+
+def test_yes():
+    a = "yes"
+    b = "/jes/"
+    r = english_gana(a, b)
+    assert r == "yes"
+
+
+def test_zoo():
+    a = "zoo"
+    b = "/zuː/"
+    r = english_gana(a, b)
+    assert r == "zoo"
