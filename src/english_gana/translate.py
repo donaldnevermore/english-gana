@@ -4,7 +4,7 @@ from english_gana.translate_ipa import translate_ipa
 letter_to_english_gana = {
     "a": ["â", "ā", "ä", "e", "ö"],
     "c": ["k", "s", "ch"],
-    "e": ["i", "ï", "ë"],
+    "e": ["i", "ï", "ë", "ā"],
     "g": ["j"],
     "i": ["ī", "ï", "ë"],
     "n": ["ng"],
@@ -183,6 +183,8 @@ class EnglishGana:
             return True
         if self.match("o", "oi") and self.next_in(["i", "y"]):
             return True
+        if self.match("e", "ā") and self.next_in(["i", "y"]):
+            return True
         if self.match("o", "au") and self.next_in(["u", "w"]):
             return True
         if self.match("s", "sh") and self.next_is("h"):
@@ -194,6 +196,8 @@ class EnglishGana:
         if self.match("o", "ü") and self.next_is("o"):
             return True
         if self.match("c", "k") and self.next_is("k"):
+            return True
+        if self.match("n", "ng") and self.next_is("g"):
             return True
 
         return False

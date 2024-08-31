@@ -114,6 +114,27 @@ def test_cure():
     assert r == "c[u]{yu}r[e]{}"
 
 
+def test_thing():
+    a = "thing"
+    b = "/θɪŋ/"
+    r = english_gana(a, b)
+    assert r == "thing"
+
+
+def test_eight():
+    a = "eight"
+    b = "/eɪt/"
+    r = english_gana(a, b)
+    assert r == "ei[gh]{}t"
+
+
+def test_they():
+    a = "they"
+    b = "/ðeɪ/"
+    r = english_gana(a, b)
+    assert r == "[t]{d}hey"
+
+
 # starts with alphabet order
 
 
