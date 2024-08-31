@@ -25,16 +25,6 @@ def is_two_parts(i: int, sound: str) -> bool:
     return False
 
 
-def is_three_parts(i: int, sound: str) -> bool:
-    if i + 2 >= len(sound):
-        return False
-
-    if sound[i : i + 3] == "juː":
-        return True
-    else:
-        return False
-
-
 def tokenize_ipa(txt: str) -> list[str]:
     """divide into IPA symbols
 
@@ -56,9 +46,6 @@ def tokenize_ipa(txt: str) -> list[str]:
         if is_two_parts(i, sound):
             result.append(sound[i : i + 2])
             i += 2
-        elif is_three_parts(i, sound):
-            result.append(sound[i : i + 3])
-            i += 3
         else:
             result.append(sound[i])
             i += 1

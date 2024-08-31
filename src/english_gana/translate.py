@@ -12,7 +12,7 @@ letter_to_english_gana = {
     "q": ["k"],
     "s": ["z", "sh"],
     "t": ["th", "dh"],
-    "u": ["û", "ū", "ü", "ë", "e"],
+    "u": ["û", "ü", "ë", "e", "y"],  # ū
     "x": ["k", "z"],
     "y": ["i", "ī"],
 }
@@ -43,7 +43,7 @@ vowel_symbols = [
     "oi",
     "u",
     "û",
-    "ū",
+    # ū
     "ü",
 ]
 
@@ -252,6 +252,14 @@ class EnglishGana:
                     self.result.append("[t]{d}h")
                     self.i += 2
                     self.j += 1
+                elif self.match("u", "y") and self.next_sound_is("ü"):
+                    self.result.append("[u]{ū}")
+                    self.i += 1
+                    self.j += 2
+                elif self.match("u", "y") and self.next_sound_is("u"):
+                    self.result.append("[u]{yu}")
+                    self.i += 1
+                    self.j += 2
                 elif self.match("x", "k") and self.next_sound_is("s"):
                     self.result.append("x")
                     self.i += 1

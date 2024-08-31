@@ -107,6 +107,13 @@ def test_zoo():
     assert r == "zoo"
 
 
+def test_cure():
+    a = "cure"
+    b = "/kjʊr/"
+    r = english_gana(a, b)
+    assert r == "c[u]{yu}r[e]{}"
+
+
 # starts with alphabet order
 
 

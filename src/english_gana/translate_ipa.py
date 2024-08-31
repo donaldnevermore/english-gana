@@ -18,8 +18,6 @@ ipa_to_english_gana = {
     "aɪ": "ī",
     "əʊ": "ō",
     "aʊ": "au",
-    # ū = y + ü
-    "juː": "ū",
     # ir, ur, er
     # consonant
     "tʃ": "ch",

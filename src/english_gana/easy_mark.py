@@ -16,7 +16,6 @@ ipa_to_easy_mark = {
     "aɪ": "ai",
     "əʊ": "ou",
     "aʊ": "au",
-    "juː": "yuu",
     # consonant
     "tʃ": "ch",
     "dʒ": "j",
