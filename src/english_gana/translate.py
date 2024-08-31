@@ -56,7 +56,7 @@ class EnglishGana:
             and symbols[-2] not in vowel_to_schwa
         ):
             changed = symbols.copy()
-            changed.insert(-1, "é")
+            changed.insert(-1, "ó")
             self.sound = changed
         else:
             self.sound = symbols
@@ -199,7 +199,7 @@ class EnglishGana:
                     self.eat_two_letters()
                 else:
                     self.eat_a_letter()
-            elif self.wordi() in vowel_to_schwa and self.soundj() == "é":
+            elif self.wordi() in vowel_to_schwa and self.soundj() == "ó":
                 self.handle_omit()
                 self.eat_a_schwa()
             elif (
