@@ -56,14 +56,13 @@ def english_gana_mark(ipa: str) -> list[str]:
 class EnglishGana:
     # the sound symbols of English Gana
     sound: list[str] = []
-
     # for silent letters
     omit: int | None = None
-
     word: str = ""
     result: list[str] = []
     i: int = 0
     j: int = 0
+    unresolved_j: int | None = None
 
     def __init__(self, word: str, ipa: str) -> None:
         self.word = word
@@ -215,10 +214,13 @@ class EnglishGana:
 
         while True:
             if self.i >= len(self.word):
-                self.handle_omit()
+                if self.j < len(self.sound):
+                    self.unresolved_j = self.j
                 break
             if self.j >= len(self.sound):
-                self.result.append(f"[{self.word[self.i :]}]{{}}")
+                remain_letters = self.word[self.i :]
+                if len(remain_letters) > 0:
+                    self.result.append(f"[{remain_letters}]{{}}")
                 break
 
             if self.wordi() == self.soundj():
@@ -277,4 +279,10 @@ def english_gana(word: str, ipa: str) -> str:
     """
     eg = EnglishGana(word, ipa)
     eg.parse()
+
+    if eg.unresolved_j is not None:
+        raise Exception(
+            f"`{word}` is not match with {eg.sound} at index {eg.unresolved_j}."
+        )
+
     return "".join(eg.result)
