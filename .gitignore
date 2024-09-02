@@ -1,3 +1,10 @@
+# IDEs
+.vscode/
+.idea/
+.vs/
+
+.pdm-python
+
 # python generated files
 __pycache__/
 *.py[oc]

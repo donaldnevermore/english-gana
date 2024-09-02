@@ -1,4 +1,4 @@
-from english_gana.translate_ipa import ipa_to_english_gana
+from translate_ipa import ipa_to_english_gana
 
 letter_to_ipa = {
     "a": ["a", "æ", "eɪ", "ɑː"],

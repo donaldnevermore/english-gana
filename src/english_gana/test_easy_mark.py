@@ -1,5 +1,5 @@
-from english_gana.easy_mark import translate_to_easy_mark
-from english_gana.tokenize import tokenize_ipa
+from .easy_mark import translate_to_easy_mark
+from .tokenize import tokenize_ipa
 
 
 def test_easy_mark():

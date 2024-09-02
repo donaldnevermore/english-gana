@@ -1,5 +1,5 @@
-from english_gana.tokenize import tokenize_ipa
-from english_gana.translate_ipa import translate_ipa
+from .tokenize import tokenize_ipa
+from .translate_ipa import translate_ipa
 
 letter_to_english_gana = {
     "a": ["â", "ā", "ä", "e", "ö"],

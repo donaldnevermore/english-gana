@@ -1,6 +1,6 @@
 import pytest
 
-from english_gana.tokenize import remove_slash_pitch, tokenize_ipa
+from .tokenize import remove_slash_pitch, tokenize_ipa
 
 
 def test_perfect():
