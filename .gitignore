@@ -4,6 +4,7 @@
 .vs/
 
 .pdm-python
+src/data/
 
 # python generated files
 __pycache__/

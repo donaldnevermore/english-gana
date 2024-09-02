@@ -8,6 +8,7 @@ dependencies = [
     "mypy>=1.11.2",
     "readmdict>=0.1.1",
     "python-lzo>=1.15",
+    "pyquery>=2.0.1",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
@@ -18,7 +19,6 @@ license = { text = "MIT" }
 distribution = false
 
 [tool.pdm.scripts]
-start = "python src/english_gana/query.py"
 test = "pytest"
 
 [tool.mypy]
