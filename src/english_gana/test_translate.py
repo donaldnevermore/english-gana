@@ -104,7 +104,7 @@ def test_zoo():
     a = "zoo"
     b = "/zuː/"
     r = english_gana(a, b)
-    assert r == "zoo"
+    assert r == "z[oo]{ü}"
 
 
 def test_cure():
@@ -233,7 +233,7 @@ def test_need():
     a = "need"
     b = "/niːd/"
     r = english_gana(a, b)
-    assert r == "need"
+    assert r == "n[e]{ē}[e]{}d"
 
 
 def test_ox():
@@ -275,7 +275,7 @@ def test_tooth():
     a = "tooth"
     b = "/tuːθ/"
     r = english_gana(a, b)
-    assert r == "tooth"
+    assert r == "t[oo]{ü}th"
 
 
 def test_update():
