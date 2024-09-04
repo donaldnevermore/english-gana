@@ -3,9 +3,9 @@ from .translate_ipa import translate_ipa
 
 letter_to_english_gana = {
     "a": ["â", "ā", "ä", "e", "ö", "ó"],
-    "c": ["k", "s", "ch"],
+    "c": ["k", "s", "ch", "sh"],
     "d": ["j"],
-    "e": ["i", "ï", "ë", "ā", "ó"],
+    "e": ["i", "ï", "ë", "ā", "y", "ó"],
     "g": ["j", "f"],
     "i": ["ī", "ï", "ë", "y", "ó"],
     "n": ["ng"],
@@ -13,7 +13,7 @@ letter_to_english_gana = {
     "p": ["f"],
     "q": ["k"],
     "s": ["z", "sh", "zh"],
-    "t": ["th", "dh"],
+    "t": ["th", "dh", "ch", "sh"],
     "u": ["û", "ü", "ë", "e", "y", "i", "ó"],
     "x": ["k", "z"],
     "y": ["i", "ī"],
@@ -216,7 +216,9 @@ class EnglishGana:
             return True
         if self.match_is("d", "j") and self.next_is("g"):
             return True
-        if self.match_is("s", "zh") and self.next_is("i"):
+        if self.match_in("s", ["sh", "zh"]) and self.next_is("i"):
+            return True
+        if self.match_is("t", "sh") and self.next_is("i"):
             return True
         if self.match_is("p", "f") and self.next_is("h"):
             return True
@@ -235,6 +237,79 @@ class EnglishGana:
 
         return False
 
+    def should_in_table(self) -> bool:
+        if self.match_is("t", "ch") and self.next_is("c"):
+            return False
+
+        return (
+            self.wordi() in letter_to_english_gana
+            and self.soundj() in letter_to_english_gana[self.wordi()]
+        )
+
+    def handle_in_table(self) -> None:
+        if self.is_same_consonant_after():
+            self.result.append(self.wordi())
+            self.i += 1
+            return
+
+        # greedy algorithm: eat the longest letters first
+        if self.match_is("q", "k") and self.next_is("u") and self.next_sound_is("w"):
+            self.result.append("qu")
+            self.i += 2
+            self.j += 2
+        elif self.match_is("e", "y") and self.next_is("w") and self.next_sound_is("ü"):
+            self.result.append("[ew]{yü}")
+            self.i += 2
+            self.j += 2
+        elif self.match_is("e", "y") and self.next_is("u") and self.next_sound_is("ü"):
+            self.result.append("[e]{}[u]{yü}")
+            self.i += 2
+            self.j += 2
+        elif self.is_combination():
+            letters = self.word[self.i : self.i + 2]
+            self.result.append(f"[{letters}]{{{self.soundj()}}}")
+            self.i += 2
+            self.j += 1
+        elif self.match_is("o", "û") and self.next_is("u"):
+            self.result.append("[o]{}[u]{û}")
+            self.i += 2
+            self.j += 1
+        elif self.match_is("t", "dh") and self.next_is("h"):
+            self.result.append("[t]{d}h")
+            self.i += 2
+            self.j += 1
+        elif self.match_is("c", "sh") and self.next_is("h"):
+            self.result.append("[c]{s}h")
+            self.i += 2
+            self.j += 1
+        elif self.match_is("c", "sh") and self.next_in(["i", "e"]):
+            letters = self.word[self.i : self.i + 2]
+            self.result.append(f"[{letters}]{{sh}}")
+            self.i += 2
+            self.j += 1
+        elif self.match_is("e", "i") and self.next_is("y"):
+            self.result.append("[e]{}y")
+            self.i += 2
+            self.j += 1
+        elif self.should_eat_two():
+            self.eat_two_letters()
+        elif self.match_is("u", "y") and self.next_sound_is("ü"):
+            self.result.append("[u]{yü}")
+            self.i += 1
+            self.j += 2
+        elif self.match_is("u", "y") and self.next_sound_is("u"):
+            self.result.append("[u]{yu}")
+            self.i += 1
+            self.j += 2
+        elif self.match_is("x", "k") and self.next_sound_is("s"):
+            self.result.append("x")
+            self.i += 1
+            self.j += 2
+        elif self.should_eat_one():
+            self.eat_a_letter()
+        else:
+            self.eat_a_ruby()
+
     def parse(self) -> None:
         self.result = []
         self.omit = None
@@ -252,62 +327,15 @@ class EnglishGana:
                     self.result.append(f"[{remain_letters}]{{}}")
                 break
 
-            if self.is_same_consonant_after():
-                self.result.append(self.wordi())
-                self.i += 1
-            elif self.wordi() == self.soundj():
+            if self.wordi() == self.soundj():
                 self.handle_omit()
-                self.eat_a_letter()
-            elif (
-                self.wordi() in letter_to_english_gana
-                and self.soundj() in letter_to_english_gana[self.wordi()]
-            ):
-                self.handle_omit()
-
-                # greedy algorithm: eat the longest letters first
-                if (
-                    self.match_is("q", "k")
-                    and self.next_is("u")
-                    and self.next_sound_is("w")
-                ):
-                    self.result.append("qu")
-                    self.i += 2
-                    self.j += 2
-                elif self.is_combination():
-                    letters = self.word[self.i : self.i + 2]
-                    self.result.append(f"[{letters}]{{{self.soundj()}}}")
-                    self.i += 2
-                    self.j += 1
-                elif self.should_eat_two():
+                if self.is_same_consonant_after():
                     self.eat_two_letters()
-                elif self.match_in("o", ["û", "ó"]) and self.next_is("u"):
-                    self.result.append(f"[o]{{}}[u]{{{self.soundj()}}}")
-                    self.i += 2
-                    self.j += 1
-                elif self.match_is("t", "dh") and self.next_is("h"):
-                    self.result.append("[t]{d}h")
-                    self.i += 2
-                    self.j += 1
-                elif self.match_is("e", "i") and self.next_is("y"):
-                    self.result.append("[e]{}y")
-                    self.i += 2
-                    self.j += 1
-                elif self.match_is("u", "y") and self.next_sound_is("ü"):
-                    self.result.append("[u]{yü}")
-                    self.i += 1
-                    self.j += 2
-                elif self.match_is("u", "y") and self.next_sound_is("u"):
-                    self.result.append("[u]{yu}")
-                    self.i += 1
-                    self.j += 2
-                elif self.match_is("x", "k") and self.next_sound_is("s"):
-                    self.result.append("x")
-                    self.i += 1
-                    self.j += 2
-                elif self.should_eat_one():
-                    self.eat_a_letter()
                 else:
-                    self.eat_a_ruby()
+                    self.eat_a_letter()
+            elif self.should_in_table():
+                self.handle_omit()
+                self.handle_in_table()
             else:
                 # not match
                 if self.omit is None:

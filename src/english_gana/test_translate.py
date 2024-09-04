@@ -198,6 +198,55 @@ def test_money():
     assert r == "m[o]{û}n[e]{}y"
 
 
+def test_few():
+    a = "few"
+    b = "/fjuː/"
+    r = english_gana(a, b)
+    assert r == "f[ew]{yü}"
+
+
+def test_picture():
+    a = "picture"
+    b = "/ˈpɪktʃər/"
+    r = english_gana(a, b)
+    assert r == "pic[t]{ch}[u]{ó}r[e]{}"
+
+
+def test_mission():
+    a = "mission"
+    b = "/ˈmɪʃn/"
+    r = english_gana(a, b)
+    assert r == "mis[si]{sh}[o]{ó}n"
+
+
+def test_action():
+    a = "action"
+    b = "/ˈækʃn/"
+    r = english_gana(a, b)
+    assert r == "[a]{â}c[ti]{sh}[o]{ó}n"
+
+
+def test_chef():
+    a = "chef"
+    b = "/ʃef/"
+    r = english_gana(a, b)
+    assert r == "[c]{s}hef"
+
+
+def test_cetacean():
+    a = "cetacean"
+    b = "/sɪˈteɪʃn/"
+    r = english_gana(a, b)
+    assert r == "[c]{s}[e]{i}t[a]{ā}[ce]{sh}[a]{ó}n"
+
+
+def test_social():
+    a = "social"
+    b = "/ˈsəʊʃl/"
+    r = english_gana(a, b)
+    assert r == "s[o]{ō}[ci]{sh}[a]{ó}l"
+
+
 # starts with alphabet order
 
 
