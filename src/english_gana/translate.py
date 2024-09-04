@@ -4,13 +4,15 @@ from .translate_ipa import translate_ipa
 letter_to_english_gana = {
     "a": ["â", "ā", "ä", "e", "ö"],
     "c": ["k", "s", "ch"],
+    "d": ["j"],
     "e": ["i", "ï", "ë", "ā"],
-    "g": ["j"],
+    "g": ["j", "f"],
     "i": ["ī", "ï", "ë", "y"],
     "n": ["ng"],
     "o": ["ä", "ō", "ö", "ü", "u", "û", "i", "oi", "au"],
+    "p": ["f"],
     "q": ["k"],
-    "s": ["z", "sh"],
+    "s": ["z", "sh", "zh"],
     "t": ["th", "dh"],
     "u": ["û", "ü", "ë", "e", "y"],  # ū
     "x": ["k", "z"],
@@ -204,12 +206,20 @@ class EnglishGana:
 
         return False
 
-    def is_vowel_combo(self) -> bool:
+    def is_combination(self) -> bool:
         if self.match_in("o", ["ü", "u"]) and self.next_is("o"):
             return True
         if self.match_is("e", "ü") and self.next_is("w"):
             return True
         if self.match_is("a", "ö") and self.next_in(["w", "u"]):
+            return True
+        if self.match_is("d", "j") and self.next_is("g"):
+            return True
+        if self.match_is("s", "zh") and self.next_is("i"):
+            return True
+        if self.match_is("p", "f") and self.next_is("h"):
+            return True
+        if self.match_is("g", "f") and self.next_is("h"):
             return True
 
         return False
@@ -218,6 +228,8 @@ class EnglishGana:
         if self.match_is("c", "k"):
             return True
         if self.match_is("o", "ä"):
+            return True
+        if self.match_is("y", "i"):
             return True
 
         return False
@@ -263,13 +275,17 @@ class EnglishGana:
                     self.result.append("qu")
                     self.i += 2
                     self.j += 2
-                elif self.is_vowel_combo():
+                elif self.is_combination():
                     letters = self.word[self.i : self.i + 2]
                     self.result.append(f"[{letters}]{{{self.soundj()}}}")
                     self.i += 2
                     self.j += 1
                 elif self.should_eat_two():
                     self.eat_two_letters()
+                elif self.match_in("o", ["û", "ó"]) and self.next_is("u"):
+                    self.result.append(f"[o]{{}}[u]{{{self.soundj()}}}")
+                    self.i += 2
+                    self.j += 1
                 elif self.match_is("t", "dh") and self.next_is("h"):
                     self.result.append("[t]{d}h")
                     self.i += 2

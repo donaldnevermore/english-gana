@@ -135,6 +135,55 @@ def test_they():
     assert r == "[t]{d}hey"
 
 
+def test_judge():
+    a = "judge"
+    b = "/dʒʌdʒ/"
+    r = english_gana(a, b)
+    assert r == "j[u]{û}[dg]{j}[e]{}"
+
+
+def test_sugar():
+    a = "sugar"
+    b = "/ˈʃʊɡər/"
+    r = english_gana(a, b)
+    assert r == "[s]{sh}ug[a]{á}r"
+
+
+def test_vision():
+    a = "vision"
+    b = "/ˈvɪʒn/"
+    r = english_gana(a, b)
+    assert r == "vi[si]{zh}[o]{ó}n"
+
+
+def test_finally():
+    a = "finally"
+    b = "/ˈfaɪnəli/"
+    r = english_gana(a, b)
+    assert r == "f[i]{ī}n[a]{á}lly"
+
+
+def test_measure():
+    a = "measure"
+    b = "/ˈmeʒər/"
+    r = english_gana(a, b)
+    assert r == "me[a]{}[s]{zh}[u]{ú}r[e]{}"
+
+
+def test_phone():
+    a = "phone"
+    b = "/fəʊn/"
+    r = english_gana(a, b)
+    assert r == "[ph]{f}[o]{ō}n[e]{}"
+
+
+def test_tough():
+    a = "tough"
+    b = "/tʌf/"
+    r = english_gana(a, b)
+    assert r == "t[o]{}[u]{û}[gh]{f}"
+
+
 # starts with alphabet order
 
 
@@ -261,7 +310,7 @@ def test_ruby():
     a = "ruby"
     b = "/ˈruːbi/"
     r = english_gana(a, b)
-    assert r == "r[u]{ü}b[y]{i}"
+    assert r == "r[u]{ü}by"
 
 
 def test_ski():
