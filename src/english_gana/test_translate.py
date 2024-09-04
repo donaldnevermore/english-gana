@@ -90,7 +90,7 @@ def test_water():
     a = "water"
     b = "/ˈwɔːtər/"
     r = english_gana(a, b)
-    assert r == "w[a]{ö}t[e]{é}r"
+    assert r == "w[a]{ö}t[e]{ó}r"
 
 
 def test_yes():
@@ -146,7 +146,7 @@ def test_sugar():
     a = "sugar"
     b = "/ˈʃʊɡər/"
     r = english_gana(a, b)
-    assert r == "[s]{sh}ug[a]{á}r"
+    assert r == "[s]{sh}ug[a]{ó}r"
 
 
 def test_vision():
@@ -160,14 +160,14 @@ def test_finally():
     a = "finally"
     b = "/ˈfaɪnəli/"
     r = english_gana(a, b)
-    assert r == "f[i]{ī}n[a]{á}lly"
+    assert r == "f[i]{ī}n[a]{ó}lly"
 
 
 def test_measure():
     a = "measure"
     b = "/ˈmeʒər/"
     r = english_gana(a, b)
-    assert r == "me[a]{}[s]{zh}[u]{ú}r[e]{}"
+    assert r == "me[a]{}[s]{zh}[u]{ó}r[e]{}"
 
 
 def test_phone():
@@ -182,6 +182,20 @@ def test_tough():
     b = "/tʌf/"
     r = english_gana(a, b)
     assert r == "t[o]{}[u]{û}[gh]{f}"
+
+
+def test_watch():
+    a = "watch"
+    b = "/wɑːtʃ/"
+    r = english_gana(a, b)
+    assert r == "w[a]{ä}[t]{}ch"
+
+
+def test_money():
+    a = "money"
+    b = "/ˈmʌni/"
+    r = english_gana(a, b)
+    assert r == "m[o]{û}n[e]{}y"
 
 
 # starts with alphabet order
@@ -275,14 +289,14 @@ def test_music():
     a = "music"
     b = "/ˈmjuːzɪk/"
     r = english_gana(a, b)
-    assert r == "m[u]{ū}[s]{z}ic"
+    assert r == "m[u]{yü}[s]{z}ic"
 
 
 def test_need():
     a = "need"
     b = "/niːd/"
     r = english_gana(a, b)
-    assert r == "n[e]{ē}[e]{}d"
+    assert r == "n[e]{ï}[e]{}d"
 
 
 def test_ox():
@@ -338,14 +352,14 @@ def test_vowel():
     a = "vowel"
     b = "/ˈvaʊəl/"
     r = english_gana(a, b)
-    assert r == "vow[e]{é}l"
+    assert r == "vow[e]{ó}l"
 
 
 def test_weather():
     a = "weather"
     b = "/ˈweðər/"
     r = english_gana(a, b)
-    assert r == "we[a]{}[t]{d}h[e]{é}r"
+    assert r == "we[a]{}[t]{d}h[e]{ó}r"
 
 
 def test_xenon():

@@ -2,19 +2,19 @@ from .tokenize import tokenize_ipa
 from .translate_ipa import translate_ipa
 
 letter_to_english_gana = {
-    "a": ["â", "ā", "ä", "e", "ö"],
+    "a": ["â", "ā", "ä", "e", "ö", "ó"],
     "c": ["k", "s", "ch"],
     "d": ["j"],
-    "e": ["i", "ï", "ë", "ā"],
+    "e": ["i", "ï", "ë", "ā", "ó"],
     "g": ["j", "f"],
-    "i": ["ī", "ï", "ë", "y"],
+    "i": ["ī", "ï", "ë", "y", "ó"],
     "n": ["ng"],
-    "o": ["ä", "ō", "ö", "ü", "u", "û", "i", "oi", "au"],
+    "o": ["ä", "ō", "ö", "ü", "u", "û", "i", "oi", "au", "ó"],
     "p": ["f"],
     "q": ["k"],
     "s": ["z", "sh", "zh"],
     "t": ["th", "dh"],
-    "u": ["û", "ü", "ë", "e", "y"],  # ū
+    "u": ["û", "ü", "ë", "e", "y", "i", "ó"],
     "x": ["k", "z"],
     "y": ["i", "ī"],
 }
@@ -34,6 +34,7 @@ vowel_symbols = [
     "ä",
     "au",
     "e",
+    # ē
     "ë",
     "i",
     "ī",
@@ -251,15 +252,12 @@ class EnglishGana:
                     self.result.append(f"[{remain_letters}]{{}}")
                 break
 
-            if self.wordi() == self.soundj():
+            if self.is_same_consonant_after():
+                self.result.append(self.wordi())
+                self.i += 1
+            elif self.wordi() == self.soundj():
                 self.handle_omit()
-                if self.is_same_consonant_after():
-                    self.eat_two_letters()
-                else:
-                    self.eat_a_letter()
-            elif self.wordi() in vowel_to_schwa and self.soundj() == "ó":
-                self.handle_omit()
-                self.eat_a_schwa()
+                self.eat_a_letter()
             elif (
                 self.wordi() in letter_to_english_gana
                 and self.soundj() in letter_to_english_gana[self.wordi()]
@@ -290,8 +288,12 @@ class EnglishGana:
                     self.result.append("[t]{d}h")
                     self.i += 2
                     self.j += 1
+                elif self.match_is("e", "i") and self.next_is("y"):
+                    self.result.append("[e]{}y")
+                    self.i += 2
+                    self.j += 1
                 elif self.match_is("u", "y") and self.next_sound_is("ü"):
-                    self.result.append("[u]{ū}")
+                    self.result.append("[u]{yü}")
                     self.i += 1
                     self.j += 2
                 elif self.match_is("u", "y") and self.next_sound_is("u"):
@@ -302,10 +304,6 @@ class EnglishGana:
                     self.result.append("x")
                     self.i += 1
                     self.j += 2
-                elif self.match_is("e", "ï"):
-                    self.result.append("[e]{ē}")
-                    self.i += 1
-                    self.j += 1
                 elif self.should_eat_one():
                     self.eat_a_letter()
                 else:
@@ -331,8 +329,6 @@ def english_gana(word: str, ipa: str) -> str:
     eg.parse()
 
     if eg.unresolved_j is not None:
-        raise Exception(
-            f"`{word}` is not match with {eg.sound} at index {eg.unresolved_j}."
-        )
+        print(f"`{word}` doesn't match with {eg.sound} at index {eg.unresolved_j}.")
 
     return "".join(eg.result)
