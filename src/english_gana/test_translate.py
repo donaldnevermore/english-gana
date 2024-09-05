@@ -275,6 +275,20 @@ def test_through():
     assert r == "thr[o]{}[u]{ü}[gh]{}"
 
 
+def test_anxious():
+    a = "anxious"
+    b = "/ˈæŋkʃəs/"
+    r = english_gana(a, b)
+    assert r == "[a]{â}[n]{ng}[xi]{ksh}[o]{}[u]{ó}s"
+
+
+def test_anxiety():
+    a = "anxiety"
+    b = "/æŋˈzaɪəti/"
+    r = english_gana(a, b)
+    assert r == "[a]{â}[n]{ng}x[i]{ī}[e]{ó}ty"
+
+
 # starts with alphabet order
 
 
@@ -380,7 +394,7 @@ def test_ox():
     a = "ox"
     b = "/ɑːks/"
     r = english_gana(a, b)
-    assert r == "ox"
+    assert r == "o[x]{ks}"
 
 
 def test_person():
@@ -443,7 +457,7 @@ def test_xenon():
     a = "xenon"
     b = "/ˈzenɑːn/"
     r = english_gana(a, b)
-    assert r == "[x]{z}enon"
+    assert r == "xenon"
 
 
 def test_yard():

@@ -220,6 +220,8 @@ class EnglishGana:
             return True
         if self.match_is("y", "i"):
             return True
+        if self.match_is("x", "z"):
+            return True
 
         return False
 
@@ -254,6 +256,10 @@ class EnglishGana:
             self.result.append("[e]{}[u]{yü}")
             self.i += 2
             self.j += 2
+        elif self.match_is("x", "k") and self.next_is("i") and self.next_sound_is("sh"):
+            self.result.append("[xi]{ksh}")
+            self.i += 2
+            self.j += 2
         elif self.is_combination():
             letters = self.word[self.i : self.i + 2]
             self.result.append(f"[{letters}]{{{self.soundj()}}}")
@@ -282,16 +288,16 @@ class EnglishGana:
             self.j += 1
         elif self.should_eat_two():
             self.eat_two_letters()
+        elif self.match_is("x", "k") and self.next_sound_is("s"):
+            self.result.append("[x]{ks}")
+            self.i += 1
+            self.j += 2
         elif self.match_is("u", "y") and self.next_sound_is("ü"):
             self.result.append("[u]{yü}")
             self.i += 1
             self.j += 2
         elif self.match_is("u", "y") and self.next_sound_is("u"):
             self.result.append("[u]{yu}")
-            self.i += 1
-            self.j += 2
-        elif self.match_is("x", "k") and self.next_sound_is("s"):
-            self.result.append("x")
             self.i += 1
             self.j += 2
         elif self.should_eat_one():
