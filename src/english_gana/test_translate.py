@@ -177,13 +177,6 @@ def test_phone():
     assert r == "[ph]{f}[o]{ō}n[e]{}"
 
 
-def test_tough():
-    a = "tough"
-    b = "/tʌf/"
-    r = english_gana(a, b)
-    assert r == "t[o]{}[u]{û}[gh]{f}"
-
-
 def test_watch():
     a = "watch"
     b = "/wɑːtʃ/"
@@ -245,6 +238,41 @@ def test_social():
     b = "/ˈsəʊʃl/"
     r = english_gana(a, b)
     assert r == "s[o]{ō}[ci]{sh}[a]{ó}l"
+
+
+def test_obvious():
+    a = "obvious"
+    b = "/ˈɑːbviəs/"
+    r = english_gana(a, b)
+    assert r == "obvi[o]{}[u]{ó}s"
+
+
+def test_though():
+    a = "though"
+    b = "/ðəʊ/"
+    r = english_gana(a, b)
+    assert r == "[t]{d}h[o]{ō}[ugh]{}"
+
+
+def test_tough():
+    a = "tough"
+    b = "/tʌf/"
+    r = english_gana(a, b)
+    assert r == "t[o]{}[u]{û}[gh]{f}"
+
+
+def test_cough():
+    a = "cough"
+    b = "/kɔːf/"
+    r = english_gana(a, b)
+    assert r == "c[o]{ö}[u]{}[gh]{f}"
+
+
+def test_through():
+    a = "through"
+    b = "/θruː/"
+    r = english_gana(a, b)
+    assert r == "thr[o]{}[u]{ü}[gh]{}"
 
 
 # starts with alphabet order

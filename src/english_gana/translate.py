@@ -4,7 +4,7 @@ from .translate_ipa import translate_ipa
 letter_to_english_gana = {
     "a": ["â", "ā", "ä", "e", "ö", "ó"],
     "c": ["k", "s", "ch", "sh"],
-    "d": ["j"],
+    "d": ["j", "t"],
     "e": ["i", "ï", "ë", "ā", "y", "ó"],
     "g": ["j", "f"],
     "i": ["ī", "ï", "ë", "y", "ó"],
@@ -107,8 +107,8 @@ class EnglishGana:
         self.i += 2
         self.j += 1
 
-    def is_same_consonant_after(self) -> bool:
-        # Is the consonant letter that comes after the same as the current letter?
+    def same_next_consonant(self) -> bool:
+        # Is the consonant letter that comes next the same as the current letter?
         letter = self.wordi()
         return letter not in vowel_to_schwa and self.next_is(letter)
 
@@ -121,28 +121,14 @@ class EnglishGana:
         self.omit = None
 
     def wordi(self) -> str:
-        """the current letter
-
-        Raises:
-            IndexError: _description_
-
-        Returns:
-            str: _description_
-        """
+        # the current letter
         if self.i >= len(self.word):
             raise IndexError()
 
         return self.word[self.i]
 
     def soundj(self) -> str:
-        """the current sound symbol
-
-        Raises:
-            IndexError: _description_
-
-        Returns:
-            str: _description_
-        """
+        # the current sound symbol
         if self.j >= len(self.sound):
             raise IndexError()
 
@@ -208,21 +194,21 @@ class EnglishGana:
         return False
 
     def is_combination(self) -> bool:
+        if self.match_in("s", ["sh", "zh"]) and self.next_is("i"):
+            return True
+        if self.match_is("t", "sh") and self.next_is("i"):
+            return True
+        if self.match_is("d", "j") and self.next_is("g"):
+            return True
+        if self.match_is("p", "f") and self.next_is("h"):
+            return True
+        if self.match_is("g", "f") and self.next_is("h"):
+            return True
         if self.match_in("o", ["ü", "u"]) and self.next_is("o"):
             return True
         if self.match_is("e", "ü") and self.next_is("w"):
             return True
         if self.match_is("a", "ö") and self.next_in(["w", "u"]):
-            return True
-        if self.match_is("d", "j") and self.next_is("g"):
-            return True
-        if self.match_in("s", ["sh", "zh"]) and self.next_is("i"):
-            return True
-        if self.match_is("t", "sh") and self.next_is("i"):
-            return True
-        if self.match_is("p", "f") and self.next_is("h"):
-            return True
-        if self.match_is("g", "f") and self.next_is("h"):
             return True
 
         return False
@@ -237,23 +223,26 @@ class EnglishGana:
 
         return False
 
-    def should_in_table(self) -> bool:
-        if self.match_is("t", "ch") and self.next_is("c"):
-            return False
-
-        return (
-            self.wordi() in letter_to_english_gana
-            and self.soundj() in letter_to_english_gana[self.wordi()]
-        )
-
     def handle_in_table(self) -> None:
-        if self.is_same_consonant_after():
+        if self.same_next_consonant():
             self.result.append(self.wordi())
             self.i += 1
             return
 
         # greedy algorithm: eat the longest letters first
-        if self.match_is("q", "k") and self.next_is("u") and self.next_sound_is("w"):
+        if (
+            self.match_is("o", "ó")
+            and self.word[self.i + 1 : self.i + 3] == "us"
+            and self.next_sound_is("s")
+        ):
+            self.result.append("[o]{}[u]{ó}s")
+            self.i += 3
+            self.j += 2
+        elif self.match_is("t", "ch") and self.word[self.i + 1 : self.i + 3] == "ch":
+            self.result.append("[t]{}ch")
+            self.i += 3
+            self.j += 1
+        elif self.match_is("q", "k") and self.next_is("u") and self.next_sound_is("w"):
             self.result.append("qu")
             self.i += 2
             self.j += 2
@@ -270,8 +259,8 @@ class EnglishGana:
             self.result.append(f"[{letters}]{{{self.soundj()}}}")
             self.i += 2
             self.j += 1
-        elif self.match_is("o", "û") and self.next_is("u"):
-            self.result.append("[o]{}[u]{û}")
+        elif self.match_in("o", ["û", "ü", "u"]) and self.next_is("u"):
+            self.result.append(f"[o]{{}}[u]{{{self.soundj()}}}")
             self.i += 2
             self.j += 1
         elif self.match_is("t", "dh") and self.next_is("h"):
@@ -329,11 +318,14 @@ class EnglishGana:
 
             if self.wordi() == self.soundj():
                 self.handle_omit()
-                if self.is_same_consonant_after():
+                if self.same_next_consonant():
                     self.eat_two_letters()
                 else:
                     self.eat_a_letter()
-            elif self.should_in_table():
+            elif (
+                self.wordi() in letter_to_english_gana
+                and self.soundj() in letter_to_english_gana[self.wordi()]
+            ):
                 self.handle_omit()
                 self.handle_in_table()
             else:
