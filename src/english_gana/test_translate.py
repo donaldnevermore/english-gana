@@ -104,7 +104,7 @@ def test_zoo():
     a = "zoo"
     b = "/zuː/"
     r = english_gana(a, b)
-    assert r == "z[oo]{ü}"
+    assert r == "z[o]{ü}[o]{}"
 
 
 def test_cure():
@@ -139,7 +139,7 @@ def test_judge():
     a = "judge"
     b = "/dʒʌdʒ/"
     r = english_gana(a, b)
-    assert r == "j[u]{û}[dg]{j}[e]{}"
+    assert r == "j[u]{û}[d]{}[g]{j}[e]{}"
 
 
 def test_sugar():
@@ -174,7 +174,7 @@ def test_phone():
     a = "phone"
     b = "/fəʊn/"
     r = english_gana(a, b)
-    assert r == "[ph]{f}[o]{ō}n[e]{}"
+    assert r == "[p]{f}[h]{}[o]{ō}n[e]{}"
 
 
 def test_watch():
@@ -195,7 +195,7 @@ def test_few():
     a = "few"
     b = "/fjuː/"
     r = english_gana(a, b)
-    assert r == "f[ew]{yü}"
+    assert r == "f[e]{yü}[w]{}"
 
 
 def test_picture():
@@ -258,14 +258,14 @@ def test_tough():
     a = "tough"
     b = "/tʌf/"
     r = english_gana(a, b)
-    assert r == "t[o]{}[u]{û}[gh]{f}"
+    assert r == "t[o]{}[u]{û}[g]{f}[h]{}"
 
 
 def test_cough():
     a = "cough"
     b = "/kɔːf/"
     r = english_gana(a, b)
-    assert r == "c[o]{ö}[u]{}[gh]{f}"
+    assert r == "c[o]{ö}[u]{}[g]{f}[h]{}"
 
 
 def test_through():
@@ -429,7 +429,7 @@ def test_tooth():
     a = "tooth"
     b = "/tuːθ/"
     r = english_gana(a, b)
-    assert r == "t[oo]{ü}th"
+    assert r == "t[o]{ü}[o]{}th"
 
 
 def test_update():

@@ -4,7 +4,7 @@ from .translate_ipa import translate_ipa
 letter_to_english_gana = {
     "a": ["â", "ā", "ä", "e", "ö", "û", "n", "l", "ó"],
     "c": ["k", "s", "ch", "sh"],
-    "d": ["j", "t"],
+    "d": ["t"],
     "e": ["i", "ï", "ë", "ā", "y", "ü", "n", "l", "ó"],
     "f": ["v"],
     "g": ["j", "f"],
@@ -177,26 +177,6 @@ class EnglishGana:
 
         return False
 
-    def is_combination(self) -> bool:
-        if self.match_in("s", ["sh", "zh"]) and self.next_is("i"):
-            return True
-        if self.match_is("t", "sh") and self.next_is("i"):
-            return True
-        if self.match_is("d", "j") and self.next_is("g"):
-            return True
-        if self.match_is("p", "f") and self.next_is("h"):
-            return True
-        if self.match_is("g", "f") and self.next_is("h"):
-            return True
-        if self.match_in("o", ["ü", "u"]) and self.next_is("o"):
-            return True
-        if self.match_is("e", "ü") and self.next_is("w"):
-            return True
-        if self.match_is("a", "ö") and self.next_in(["w", "u"]):
-            return True
-
-        return False
-
     def should_eat_one(self) -> bool:
         if self.match_is("c", "k"):
             return True
@@ -233,7 +213,7 @@ class EnglishGana:
             self.i += 2
             self.j += 2
         elif self.match_is("e", "y") and self.next_is("w") and self.next_sound_is("ü"):
-            self.result.append("[ew]{yü}")
+            self.result.append("[e]{yü}[w]{}")
             self.i += 2
             self.j += 2
         elif self.match_is("e", "y") and self.next_is("u") and self.next_sound_is("ü"):
@@ -252,13 +232,16 @@ class EnglishGana:
             self.result.append(f"[{self.wordi()}]{{ó}}{self.word[self.i+1]}")
             self.i += 2
             self.j += 1
-        elif self.is_combination():
-            letters = self.word[self.i : self.i + 2]
-            self.result.append(f"[{letters}]{{{self.soundj()}}}")
-            self.i += 2
-            self.j += 1
         elif self.match_in("o", ["û", "ü", "u"]) and self.next_is("u"):
             self.result.append(f"[o]{{}}[u]{{{self.soundj()}}}")
+            self.i += 2
+            self.j += 1
+        elif self.match_in("s", ["sh", "zh"]) and self.next_is("i"):
+            self.result.append(f"[si]{{{self.soundj()}}}")
+            self.i += 2
+            self.j += 1
+        elif self.match_is("t", "sh") and self.next_is("i"):
+            self.result.append("[ti]{sh}")
             self.i += 2
             self.j += 1
         elif self.match_is("t", "dh") and self.next_is("h"):
