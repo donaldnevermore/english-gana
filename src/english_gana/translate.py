@@ -2,30 +2,31 @@ from .tokenize import tokenize_ipa
 from .translate_ipa import translate_ipa
 
 letter_to_english_gana = {
-    "a": ["â", "ā", "ä", "e", "ö", "ó"],
+    "a": ["â", "ā", "ä", "e", "ö", "û", "n", "l", "ó"],
     "c": ["k", "s", "ch", "sh"],
     "d": ["j", "t"],
-    "e": ["i", "ï", "ë", "ā", "y", "ó"],
+    "e": ["i", "ï", "ë", "ā", "y", "ü", "n", "l", "ó"],
+    "f": ["v"],
     "g": ["j", "f"],
     "i": ["ī", "ï", "ë", "y", "ó"],
     "n": ["ng"],
-    "o": ["ä", "ō", "ö", "ü", "u", "û", "i", "oi", "au", "ó"],
+    "o": ["ä", "ō", "ö", "ü", "u", "û", "ë", "i", "oi", "au", "n", "l", "ó"],
     "p": ["f"],
     "q": ["k"],
     "s": ["z", "sh", "zh"],
     "t": ["th", "dh", "ch", "sh"],
-    "u": ["û", "ü", "ë", "e", "y", "i", "ó"],
+    "u": ["û", "ü", "ë", "e", "y", "i", "n", "l", "ó"],
     "x": ["k", "z"],
     "y": ["i", "ī"],
 }
 
-vowel_to_schwa = {
-    "a": "á",
-    "e": "é",
-    "i": "í",
-    "o": "ó",
-    "u": "ú",
-}
+vowels = [
+    "a",
+    "e",
+    "i",
+    "o",
+    "u",
+]
 
 vowel_symbols = [
     # a
@@ -69,22 +70,7 @@ class EnglishGana:
 
     def __init__(self, word: str, ipa: str) -> None:
         self.word = word
-        symbols = english_gana_mark(ipa)
-
-        # special cases like person, button, and final, etc.
-        if (
-            len(word) >= 2
-            and word[-1] in ["n", "l"]
-            and word[-2] in vowel_to_schwa
-            and len(symbols) >= 2
-            and symbols[-1] in ["n", "l"]
-            and symbols[-2] not in vowel_symbols
-        ):
-            changed = symbols.copy()
-            changed.insert(-1, "ó")
-            self.sound = changed
-        else:
-            self.sound = symbols
+        self.sound = english_gana_mark(ipa)
 
     def eat_a_ruby(self) -> None:
         self.result.append(f"[{self.wordi()}]{{{self.soundj()}}}")
@@ -96,12 +82,6 @@ class EnglishGana:
         self.i += 1
         self.j += 1
 
-    def eat_a_schwa(self) -> None:
-        schwa = vowel_to_schwa[self.wordi()]
-        self.result.append(f"[{self.wordi()}]{{{schwa}}}")
-        self.i += 1
-        self.j += 1
-
     def eat_two_letters(self) -> None:
         self.result.append(self.word[self.i : self.i + 2])
         self.i += 2
@@ -110,7 +90,7 @@ class EnglishGana:
     def same_next_consonant(self) -> bool:
         # Is the consonant letter that comes next the same as the current letter?
         letter = self.wordi()
-        return letter not in vowel_to_schwa and self.next_is(letter)
+        return letter not in vowels and self.next_is(letter)
 
     def handle_omit(self) -> None:
         """Handle silent letters in the middle of the word."""
@@ -188,7 +168,11 @@ class EnglishGana:
             return True
         if self.match_is("c", "k") and self.next_is("k"):
             return True
-        if self.match_is("n", "ng") and self.next_is("g"):
+        if (
+            self.match_is("n", "ng")
+            and self.next_is("g")
+            and not self.next_sound_is("g")
+        ):
             return True
 
         return False
@@ -260,6 +244,14 @@ class EnglishGana:
             self.result.append("[xi]{ksh}")
             self.i += 2
             self.j += 2
+        elif (
+            self.wordi() in vowels
+            and self.soundj() in ["n", "l"]
+            and self.next_in(["n", "l"])
+        ):
+            self.result.append(f"[{self.wordi()}]{{ó}}{self.word[self.i+1]}")
+            self.i += 2
+            self.j += 1
         elif self.is_combination():
             letters = self.word[self.i : self.i + 2]
             self.result.append(f"[{letters}]{{{self.soundj()}}}")

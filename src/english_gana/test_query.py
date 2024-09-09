@@ -1,8 +1,10 @@
 import pytest
 
-from .query import query
+from .query import go, query, run
 
 
-# def test_query():
-#     query("What are you doing?")
+# def test_a():
+#     # query()
+#     # go()
+#     run()
 #     assert False

@@ -22,4 +22,5 @@ distribution = false
 test = "pytest"
 
 [tool.mypy]
-disable_error_code = ["import-untyped", "import-not-found"]
+strict = true
+disable_error_code = ["import-untyped", "import-not-found", "no-untyped-def"]
