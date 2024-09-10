@@ -240,8 +240,8 @@ class EnglishGana:
             self.result.append(f"[si]{{{self.soundj()}}}")
             self.i += 2
             self.j += 1
-        elif self.match_is("t", "sh") and self.next_is("i"):
-            self.result.append("[ti]{sh}")
+        elif self.match_in("t", ["sh", "ch"]) and self.next_is("i"):
+            self.result.append(f"[ti]{{{self.soundj()}}}")
             self.i += 2
             self.j += 1
         elif self.match_is("t", "dh") and self.next_is("h"):

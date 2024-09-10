@@ -219,6 +219,13 @@ def test_action():
     assert r == "[a]{â}c[ti]{sh}[o]{ó}n"
 
 
+def test_digestion():
+    a = "digestion"
+    b = "/daɪˈdʒestʃən/"
+    r = english_gana(a, b)
+    assert r == "d[i]{ī}[g]{j}es[ti]{ch}[o]{ó}n"
+
+
 def test_chef():
     a = "chef"
     b = "/ʃef/"
