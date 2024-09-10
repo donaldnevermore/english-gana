@@ -9,29 +9,20 @@ from .translate import english_gana
 data_folder = "E:/Monorepos/english-gana/src/data"
 
 
-def go() -> None:
-    ganaData = GanaData()
-    mapping: dict[str, list[dict[str, str]]] = {}
-    for key, val in ganaData.mapping.items():
-        arr: list[dict[str, str]] = []
-        for elem in val:
-            arr.append(
-                {"type": elem["type"], "sound": english_gana(key, elem["sound"])}
-            )
-        mapping[key] = arr
-
-    with open(f"{data_folder}/output.json", "w", encoding="utf-8") as fp:
-        json.dump(mapping, fp, ensure_ascii=False, indent=4, sort_keys=True)
-
-
 def run() -> None:
-    s = ""
+    s: str
     with open(f"{data_folder}/input.md", "r", encoding="utf-8") as fp:
         s = fp.read()
 
-    mapping: dict[str, list[dict[str, str]]] = {}
-    with open(f"{data_folder}/output.json", "r", encoding="utf-8") as fp:
-        mapping = json.load(fp)
+    irregular: dict[str, list[dict[str, str]]]
+    with open(f"{data_folder}/irregular.json", "r", encoding="utf-8") as fp:
+        irregular = json.load(fp)
+
+    regular: dict[str, list[dict[str, str]]]
+    with open(f"{data_folder}/regular.json", "r", encoding="utf-8") as fp:
+        regular = json.load(fp)
+
+    mapping = {**regular, **irregular}
 
     article: list[str] = []
     arr: list[str] = []
@@ -44,6 +35,8 @@ def run() -> None:
             lower = word.lower()
             if lower in mapping:
                 sound = mapping[lower][0]["sound"]
+                if word[0].isupper():
+                    sound = sound.replace(word[0].lower(), word[0], 1)
                 article.append(sound)
             else:
                 article.append(word)
@@ -55,8 +48,31 @@ def run() -> None:
         fp.write("".join(article))
 
 
-def query() -> None:
-    s = ""
+def transform_ipa_to_symbol() -> None:
+    ganaData = GanaData()
+    mapping: dict[str, list[dict[str, str]]] = {}
+
+    irregular: dict[str, list[dict[str, str]]]
+    with open(f"{data_folder}/irregular.json", "r", encoding="utf-8") as fp:
+        irregular = json.load(fp)
+
+    for key, val in ganaData.mapping.items():
+        if key in irregular:
+            continue
+
+        arr: list[dict[str, str]] = []
+        for elem in val:
+            arr.append(
+                {"type": elem["type"], "sound": english_gana(key, elem["sound"])}
+            )
+        mapping[key] = arr
+
+    with open(f"{data_folder}/regular.json", "w", encoding="utf-8") as fp:
+        json.dump(mapping, fp, ensure_ascii=False, indent=4, sort_keys=True)
+
+
+def query_ipa() -> None:
+    s: str
     with open(f"{data_folder}/input.md", "r", encoding="utf-8") as fp:
         s = fp.read()
 
