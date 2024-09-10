@@ -226,6 +226,13 @@ def test_digestion():
     assert r == "d[i]{ī}[g]{j}es[ti]{ch}[o]{ó}n"
 
 
+def test_pencil():
+    a = "pencil"
+    b = "/ˈpensl/"
+    r = english_gana(a, b)
+    assert r == "pen[c]{s}[i]{ó}l"
+
+
 def test_chef():
     a = "chef"
     b = "/ʃef/"
