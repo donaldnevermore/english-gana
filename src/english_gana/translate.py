@@ -4,7 +4,7 @@ from .translate_ipa import translate_ipa
 letter_to_english_gana = {
     "a": ["â", "ā", "ä", "e", "ö", "û", "n", "l", "ó"],
     "c": ["k", "s", "ch", "sh"],
-    "d": ["t"],
+    "d": ["t", "j"],
     "e": ["i", "ï", "ë", "ā", "y", "ü", "n", "l", "ó"],
     "f": ["v"],
     "g": ["j", "f"],
@@ -20,13 +20,14 @@ letter_to_english_gana = {
     "y": ["i", "ī"],
 }
 
-vowels = [
-    "a",
-    "e",
-    "i",
-    "o",
-    "u",
-]
+vowels = {
+    "a": "á",
+    "e": "é",
+    "i": "í",
+    "o": "ó",
+    "u": "ú",
+}
+
 
 vowel_symbols = [
     # a
@@ -154,6 +155,14 @@ class EnglishGana:
             return False
 
     def should_eat_two(self) -> bool:
+        if self.match_is("o", "ü") and self.next_is("o"):
+            return True
+        if self.match_is("e", "ï") and self.next_is("e"):
+            return True
+        if self.match_is("a", "ö") and self.next_in(["w", "u"]):
+            return True
+        if self.match_is("d", "j") and self.next_is("g"):
+            return True
         if self.match_is("t", "th") and self.next_is("h"):
             return True
         if self.match_is("o", "oi") and self.next_in(["i", "y"]):
@@ -180,6 +189,10 @@ class EnglishGana:
     def should_eat_one(self) -> bool:
         if self.match_is("c", "k"):
             return True
+        if self.match_is("c", "s") and self.next_in(["i", "e", "y"]):
+            return True
+        if self.match_is("n", "ng"):
+            return True
         if self.match_is("o", "ä"):
             return True
         if self.match_is("y", "i"):
@@ -201,7 +214,7 @@ class EnglishGana:
             and self.word[self.i + 1 : self.i + 3] == "us"
             and self.next_sound_is("s")
         ):
-            self.result.append("[o]{}[u]{ó}s")
+            self.result.append("[o]{}[u]{ú}s")
             self.i += 3
             self.j += 2
         elif self.match_is("t", "ch") and self.word[self.i + 1 : self.i + 3] == "ch":
@@ -212,12 +225,12 @@ class EnglishGana:
             self.result.append("qu")
             self.i += 2
             self.j += 2
-        elif self.match_is("e", "y") and self.next_is("w") and self.next_sound_is("ü"):
-            self.result.append("[e]{yü}[w]{}")
-            self.i += 2
-            self.j += 2
-        elif self.match_is("e", "y") and self.next_is("u") and self.next_sound_is("ü"):
-            self.result.append("[e]{}[u]{yü}")
+        elif (
+            self.match_is("e", "y")
+            and self.next_in(["w", "u"])
+            and self.next_sound_is("ü")
+        ):
+            self.result.append(self.word[self.i : self.i + 2])
             self.i += 2
             self.j += 2
         elif self.match_is("x", "k") and self.next_is("i") and self.next_sound_is("sh"):
@@ -229,7 +242,8 @@ class EnglishGana:
             and self.soundj() in ["n", "l"]
             and self.next_in(["n", "l"])
         ):
-            self.result.append(f"[{self.wordi()}]{{ó}}{self.word[self.i+1]}")
+            schwa = vowels[self.wordi()]
+            self.result.append(f"[{self.wordi()}]{{{schwa}}}{self.word[self.i+1]}")
             self.i += 2
             self.j += 1
         elif self.match_in("o", ["û", "ü", "u"]) and self.next_is("u"):
@@ -268,13 +282,22 @@ class EnglishGana:
             self.i += 1
             self.j += 2
         elif self.match_is("u", "y") and self.next_sound_is("ü"):
-            self.result.append("[u]{yü}")
+            self.result.append("[u]{ū}")
             self.i += 1
             self.j += 2
         elif self.match_is("u", "y") and self.next_sound_is("u"):
             self.result.append("[u]{yu}")
             self.i += 1
             self.j += 2
+        elif self.match_is("e", "ï"):
+            self.result.append("[e]{ē}")
+            self.i += 1
+            self.j += 1
+        elif self.wordi() in vowels and self.soundj() == "ó":
+            schwa = vowels[self.wordi()]
+            self.result.append(f"[{self.wordi()}]{{{schwa}}}")
+            self.i += 1
+            self.j += 1
         elif self.should_eat_one():
             self.eat_a_letter()
         else:

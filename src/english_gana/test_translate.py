@@ -34,14 +34,14 @@ def test_ink():
     a = "ink"
     b = "/ɪŋk/"
     r = english_gana(a, b)
-    assert r == "i[n]{ng}k"
+    assert r == "ink"
 
 
 def test_juice():
     a = "juice"
     b = "/dʒuːs/"
     r = english_gana(a, b)
-    assert r == "j[u]{ü}[i]{}[c]{s}[e]{}"
+    assert r == "j[u]{ü}[i]{}c[e]{}"
 
 
 def test_like():
@@ -83,14 +83,14 @@ def test_voice():
     a = "voice"
     b = "/vɔɪs/"
     r = english_gana(a, b)
-    assert r == "voi[c]{s}[e]{}"
+    assert r == "voic[e]{}"
 
 
 def test_water():
     a = "water"
     b = "/ˈwɔːtər/"
     r = english_gana(a, b)
-    assert r == "w[a]{ö}t[e]{ó}r"
+    assert r == "w[a]{ö}t[e]{é}r"
 
 
 def test_yes():
@@ -104,7 +104,7 @@ def test_zoo():
     a = "zoo"
     b = "/zuː/"
     r = english_gana(a, b)
-    assert r == "z[o]{ü}[o]{}"
+    assert r == "zoo"
 
 
 def test_cure():
@@ -139,14 +139,14 @@ def test_judge():
     a = "judge"
     b = "/dʒʌdʒ/"
     r = english_gana(a, b)
-    assert r == "j[u]{û}[d]{}[g]{j}[e]{}"
+    assert r == "j[u]{û}dg[e]{}"
 
 
 def test_sugar():
     a = "sugar"
     b = "/ˈʃʊɡər/"
     r = english_gana(a, b)
-    assert r == "[s]{sh}ug[a]{ó}r"
+    assert r == "[s]{sh}ug[a]{á}r"
 
 
 def test_vision():
@@ -160,14 +160,14 @@ def test_finally():
     a = "finally"
     b = "/ˈfaɪnəli/"
     r = english_gana(a, b)
-    assert r == "f[i]{ī}n[a]{ó}lly"
+    assert r == "f[i]{ī}n[a]{á}lly"
 
 
 def test_measure():
     a = "measure"
     b = "/ˈmeʒər/"
     r = english_gana(a, b)
-    assert r == "me[a]{}[s]{zh}[u]{ó}r[e]{}"
+    assert r == "me[a]{}[s]{zh}[u]{ú}r[e]{}"
 
 
 def test_phone():
@@ -195,14 +195,14 @@ def test_few():
     a = "few"
     b = "/fjuː/"
     r = english_gana(a, b)
-    assert r == "f[e]{yü}[w]{}"
+    assert r == "few"
 
 
 def test_picture():
     a = "picture"
     b = "/ˈpɪktʃər/"
     r = english_gana(a, b)
-    assert r == "pic[t]{ch}[u]{ó}r[e]{}"
+    assert r == "pic[t]{ch}[u]{ú}r[e]{}"
 
 
 def test_mission():
@@ -230,7 +230,7 @@ def test_pencil():
     a = "pencil"
     b = "/ˈpensl/"
     r = english_gana(a, b)
-    assert r == "pen[c]{s}[i]{ó}l"
+    assert r == "penc[i]{í}l"
 
 
 def test_chef():
@@ -244,21 +244,21 @@ def test_cetacean():
     a = "cetacean"
     b = "/sɪˈteɪʃn/"
     r = english_gana(a, b)
-    assert r == "[c]{s}[e]{i}t[a]{ā}[ce]{sh}[a]{ó}n"
+    assert r == "c[e]{i}t[a]{ā}[ce]{sh}[a]{á}n"
 
 
 def test_social():
     a = "social"
     b = "/ˈsəʊʃl/"
     r = english_gana(a, b)
-    assert r == "s[o]{ō}[ci]{sh}[a]{ó}l"
+    assert r == "s[o]{ō}[ci]{sh}[a]{á}l"
 
 
 def test_obvious():
     a = "obvious"
     b = "/ˈɑːbviəs/"
     r = english_gana(a, b)
-    assert r == "obvi[o]{}[u]{ó}s"
+    assert r == "obvi[o]{}[u]{ú}s"
 
 
 def test_though():
@@ -293,14 +293,21 @@ def test_anxious():
     a = "anxious"
     b = "/ˈæŋkʃəs/"
     r = english_gana(a, b)
-    assert r == "[a]{â}[n]{ng}[xi]{ksh}[o]{}[u]{ó}s"
+    assert r == "[a]{â}n[xi]{ksh}[o]{}[u]{ú}s"
 
 
 def test_anxiety():
     a = "anxiety"
     b = "/æŋˈzaɪəti/"
     r = english_gana(a, b)
-    assert r == "[a]{â}[n]{ng}x[i]{ī}[e]{ó}ty"
+    assert r == "[a]{â}nx[i]{ī}[e]{é}ty"
+
+
+def test_naughty():
+    a = "naughty"
+    b = "/ˈnɔːti/"
+    r = english_gana(a, b)
+    assert r == "nau[gh]{}ty"
 
 
 # starts with alphabet order
@@ -394,14 +401,14 @@ def test_music():
     a = "music"
     b = "/ˈmjuːzɪk/"
     r = english_gana(a, b)
-    assert r == "m[u]{yü}[s]{z}ic"
+    assert r == "m[u]{ū}[s]{z}ic"
 
 
 def test_need():
     a = "need"
     b = "/niːd/"
     r = english_gana(a, b)
-    assert r == "n[e]{ï}[e]{}d"
+    assert r == "need"
 
 
 def test_ox():
@@ -443,7 +450,7 @@ def test_tooth():
     a = "tooth"
     b = "/tuːθ/"
     r = english_gana(a, b)
-    assert r == "t[o]{ü}[o]{}th"
+    assert r == "tooth"
 
 
 def test_update():
@@ -457,14 +464,14 @@ def test_vowel():
     a = "vowel"
     b = "/ˈvaʊəl/"
     r = english_gana(a, b)
-    assert r == "vow[e]{ó}l"
+    assert r == "vow[e]{é}l"
 
 
 def test_weather():
     a = "weather"
     b = "/ˈweðər/"
     r = english_gana(a, b)
-    assert r == "we[a]{}[t]{d}h[e]{ó}r"
+    assert r == "we[a]{}[t]{d}h[e]{é}r"
 
 
 def test_xenon():
