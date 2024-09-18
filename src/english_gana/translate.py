@@ -74,7 +74,7 @@ class EnglishGana:
         self.sound = english_gana_mark(ipa)
 
     def eat_a_ruby(self) -> None:
-        self.result.append(f"[{self.wordi()}]{{{self.soundj()}}}")
+        self.result.append(f"[{self.wordi()}|{self.soundj()}]")
         self.i += 1
         self.j += 1
 
@@ -98,7 +98,7 @@ class EnglishGana:
         if self.omit is None:
             return
 
-        self.result.append(f"[{self.word[self.omit : self.i]}]{{}}")
+        self.result.append(f"[{self.word[self.omit : self.i]}]")
         self.omit = None
 
     def wordi(self) -> str:
@@ -214,11 +214,11 @@ class EnglishGana:
             and self.word[self.i + 1 : self.i + 3] == "us"
             and self.next_sound_is("s")
         ):
-            self.result.append("[o]{}[u]{ú}s")
+            self.result.append("[o][u|ú]s")
             self.i += 3
             self.j += 2
         elif self.match_is("t", "ch") and self.word[self.i + 1 : self.i + 3] == "ch":
-            self.result.append("[t]{}ch")
+            self.result.append("[t]ch")
             self.i += 3
             self.j += 1
         elif self.match_is("q", "k") and self.next_is("u") and self.next_sound_is("w"):
@@ -234,7 +234,7 @@ class EnglishGana:
             self.i += 2
             self.j += 2
         elif self.match_is("x", "k") and self.next_is("i") and self.next_sound_is("sh"):
-            self.result.append("[xi]{ksh}")
+            self.result.append("[xi|ksh]")
             self.i += 2
             self.j += 2
         elif (
@@ -243,59 +243,59 @@ class EnglishGana:
             and self.next_in(["n", "l"])
         ):
             schwa = vowels[self.wordi()]
-            self.result.append(f"[{self.wordi()}]{{{schwa}}}{self.word[self.i+1]}")
+            self.result.append(f"[{self.wordi()}|{schwa}]{self.word[self.i+1]}")
             self.i += 2
             self.j += 1
         elif self.match_in("o", ["û", "ü", "u"]) and self.next_is("u"):
-            self.result.append(f"[o]{{}}[u]{{{self.soundj()}}}")
+            self.result.append(f"[o][u|{self.soundj()}]")
             self.i += 2
             self.j += 1
         elif self.match_in("s", ["sh", "zh"]) and self.next_is("i"):
-            self.result.append(f"[si]{{{self.soundj()}}}")
+            self.result.append(f"[si|{self.soundj()}]")
             self.i += 2
             self.j += 1
         elif self.match_in("t", ["sh", "ch"]) and self.next_is("i"):
-            self.result.append(f"[ti]{{{self.soundj()}}}")
+            self.result.append(f"[ti|{self.soundj()}]")
             self.i += 2
             self.j += 1
         elif self.match_is("t", "dh") and self.next_is("h"):
-            self.result.append("[t]{d}h")
+            self.result.append("[t|d]h")
             self.i += 2
             self.j += 1
         elif self.match_is("c", "sh") and self.next_is("h"):
-            self.result.append("[c]{s}h")
+            self.result.append("[c|s]h")
             self.i += 2
             self.j += 1
         elif self.match_is("c", "sh") and self.next_in(["i", "e"]):
             letters = self.word[self.i : self.i + 2]
-            self.result.append(f"[{letters}]{{sh}}")
+            self.result.append(f"[{letters}|sh]")
             self.i += 2
             self.j += 1
         elif self.match_is("e", "i") and self.next_is("y"):
-            self.result.append("[e]{}y")
+            self.result.append("[e]y")
             self.i += 2
             self.j += 1
         elif self.should_eat_two():
             self.eat_two_letters()
         elif self.match_is("x", "k") and self.next_sound_is("s"):
-            self.result.append("[x]{ks}")
+            self.result.append("[x|ks]")
             self.i += 1
             self.j += 2
         elif self.match_is("u", "y") and self.next_sound_is("ü"):
-            self.result.append("[u]{ū}")
+            self.result.append("[u|ū]")
             self.i += 1
             self.j += 2
         elif self.match_is("u", "y") and self.next_sound_is("u"):
-            self.result.append("[u]{yu}")
+            self.result.append("[u|yu]")
             self.i += 1
             self.j += 2
         elif self.match_is("e", "ï"):
-            self.result.append("[e]{ē}")
+            self.result.append("[e|ē]")
             self.i += 1
             self.j += 1
         elif self.wordi() in vowels and self.soundj() == "ó":
             schwa = vowels[self.wordi()]
-            self.result.append(f"[{self.wordi()}]{{{schwa}}}")
+            self.result.append(f"[{self.wordi()}|{schwa}]")
             self.i += 1
             self.j += 1
         elif self.should_eat_one():
@@ -317,7 +317,7 @@ class EnglishGana:
             if self.j >= len(self.sound):
                 remain_letters = self.word[self.i :]
                 if len(remain_letters) > 0:
-                    self.result.append(f"[{remain_letters}]{{}}")
+                    self.result.append(f"[{remain_letters}]")
                 break
 
             if self.wordi() == self.soundj():
