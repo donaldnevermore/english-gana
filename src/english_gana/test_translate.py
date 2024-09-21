@@ -181,7 +181,7 @@ def test_watch():
     a = "watch"
     b = "/wɑːtʃ/"
     r = english_gana(a, b)
-    assert r == "w[a|ä][t]ch"
+    assert r == "w[a|ä]tch"
 
 
 def test_money():

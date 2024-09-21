@@ -218,7 +218,7 @@ class EnglishGana:
             self.i += 3
             self.j += 2
         elif self.match_is("t", "ch") and self.word[self.i + 1 : self.i + 3] == "ch":
-            self.result.append("[t]ch")
+            self.result.append("tch")
             self.i += 3
             self.j += 1
         elif self.match_is("q", "k") and self.next_is("u") and self.next_sound_is("w"):
