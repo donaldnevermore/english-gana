@@ -1,4 +1,4 @@
-ipa_to_easy_mark = {
+easy_mark = {
     "iː": "ii",
     "ɪ": "i",
     "uː": "uu",
@@ -28,13 +28,43 @@ ipa_to_easy_mark = {
     "ɡ": "g",
 }
 
+respelling = {
+    "iː": "ee",
+    "ɪ": "i",
+    "uː": "oo",
+    "ʊ": "ou",
+    "ɜː": "ur",
+    "ə": "uh",
+    "ɔː": "aw",
+    "ɒ": "o",
+    "æ": "a",
+    "ʌ": "u",
+    "ɑː": "o",
+    # diphthong
+    "eɪ": "ay",
+    "ɔɪ": "oy",
+    "aɪ": "y",
+    "əʊ": "oa",
+    "aʊ": "ow",
+    # consonant
+    "tʃ": "ch",
+    "dʒ": "j",
+    "θ": "th",
+    "ð": "dh",
+    "ʃ": "sh",
+    "ʒ": "zh",
+    "j": "y",
+    "ŋ": "ng",
+    "ɡ": "g",
+}
+
 
 def translate_to_easy_mark(ipa: list[str]) -> list[str]:
     s: list[str] = []
 
     for ch in ipa:
-        if ch in ipa_to_easy_mark:
-            s.append(ipa_to_easy_mark[ch])
+        if ch in easy_mark:
+            s.append(easy_mark[ch])
         else:
             s.append(ch)
 
