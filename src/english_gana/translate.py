@@ -179,7 +179,7 @@ class EnglishGana:
             return True
         if (
             self.match_is("n", "ng")
-            and self.next_is("g")
+            and self.next_in(["k", "g"])
             and not self.next_sound_is("g")
         ):
             return True
@@ -191,7 +191,7 @@ class EnglishGana:
             return True
         if self.match_is("c", "s") and self.next_in(["i", "e", "y"]):
             return True
-        if self.match_is("n", "ng"):
+        if self.match_is("n", "ng") and self.next_is("x") and self.next_sound_is("k"):
             return True
         if self.match_is("o", "ä"):
             return True

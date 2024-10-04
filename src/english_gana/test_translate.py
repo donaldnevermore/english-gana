@@ -300,7 +300,7 @@ def test_anxiety():
     a = "anxiety"
     b = "/æŋˈzaɪəti/"
     r = english_gana(a, b)
-    assert r == "[a|â]nx[i|ī][e|é]ty"
+    assert r == "[a|â][n|ng]x[i|ī][e|é]ty"
 
 
 def test_naughty():
@@ -308,6 +308,20 @@ def test_naughty():
     b = "/ˈnɔːti/"
     r = english_gana(a, b)
     assert r == "nau[gh]ty"
+
+
+def test_singer():
+    a = "singer"
+    b = "/ˈsɪŋər/"
+    r = english_gana(a, b)
+    assert r == "sing[e|é]r"
+
+
+def test_finger():
+    a = "finger"
+    b = "/ˈfɪŋɡər/"
+    r = english_gana(a, b)
+    assert r == "fi[n|ng]g[e|é]r"
 
 
 # starts with alphabet order
