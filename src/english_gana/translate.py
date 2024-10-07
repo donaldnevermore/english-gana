@@ -157,19 +157,23 @@ class EnglishGana:
     def should_eat_two(self) -> bool:
         if self.match_is("o", "ü") and self.next_is("o"):
             return True
-        if self.match_is("e", "ï") and self.next_is("e"):
+        if self.match_is("o", "ō") and self.next_is("a"):
+            return True
+        if self.match_is("o", "oi") and self.next_in(["i", "y"]):
+            return True
+        if self.match_is("o", "au") and self.next_in(["u", "w"]):
+            return True
+        if self.match_is("e", "ï") and self.next_in(["e", "a"]):
+            return True
+        if self.match_is("e", "ā") and self.next_in(["i", "y"]):
+            return True
+        if self.match_is("a", "ā") and self.next_in(["i", "y"]):
             return True
         if self.match_is("a", "ö") and self.next_in(["w", "u"]):
             return True
         if self.match_is("d", "j") and self.next_is("g"):
             return True
         if self.match_is("t", "th") and self.next_is("h"):
-            return True
-        if self.match_is("o", "oi") and self.next_in(["i", "y"]):
-            return True
-        if self.match_is("e", "ā") and self.next_in(["i", "y"]):
-            return True
-        if self.match_is("o", "au") and self.next_in(["u", "w"]):
             return True
         if self.match_is("s", "sh") and self.next_is("h"):
             return True
