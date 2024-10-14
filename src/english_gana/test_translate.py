@@ -41,7 +41,7 @@ def test_juice():
     a = "juice"
     b = "/dʒuːs/"
     r = english_gana(a, b)
-    assert r == "j[u|ü][i]c[e]"
+    assert r == "juic[e]"
 
 
 def test_like():
@@ -174,7 +174,7 @@ def test_phone():
     a = "phone"
     b = "/fəʊn/"
     r = english_gana(a, b)
-    assert r == "[p|f][h][o|ō]n[e]"
+    assert r == "ph[o|ō]n[e]"
 
 
 def test_watch():
@@ -195,7 +195,7 @@ def test_few():
     a = "few"
     b = "/fjuː/"
     r = english_gana(a, b)
-    assert r == "few"
+    assert r == "f[ew|yü]"
 
 
 def test_picture():

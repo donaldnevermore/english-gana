@@ -133,6 +133,12 @@ class EnglishGana:
         else:
             return False
 
+    def next_sound_in(self, symbols: list[str]) -> bool:
+        if self.j + 1 < len(self.sound) and self.sound[self.j + 1] in symbols:
+            return True
+        else:
+            return False
+
     def match_is(self, l: str, r: str) -> bool:
         """Is l and r match word[i] and sound[j]?
 
@@ -167,13 +173,19 @@ class EnglishGana:
             return True
         if (
             self.match_is("o", "ō")
-            and self.next_is("a")
-            and not self.next_sound_is("ó")
+            and self.next_in(["a", "e"])
+            and not self.next_sound_in(vowel_symbols)
         ):
             return True
         if self.match_is("o", "oi") and self.next_in(["i", "y"]):
             return True
         if self.match_is("o", "au") and self.next_in(["u", "w"]):
+            return True
+        if (
+            self.match_is("u", "ü")
+            and self.next_in(["i", "e"])
+            and not self.next_sound_in(vowel_symbols)
+        ):
             return True
         if self.match_is("d", "j") and self.next_is("g"):
             return True
@@ -182,6 +194,8 @@ class EnglishGana:
         if self.match_is("s", "sh") and self.next_is("h"):
             return True
         if self.match_is("c", "ch") and self.next_is("h"):
+            return True
+        if self.match_is("p", "f") and self.next_is("h"):
             return True
         if self.match_is("c", "k") and self.next_is("k"):
             return True
@@ -234,11 +248,9 @@ class EnglishGana:
             self.i += 2
             self.j += 2
         elif (
-            self.match_is("e", "y")
-            and self.next_in(["w", "u"])
-            and self.next_sound_is("ü")
+            self.match_is("e", "y") and self.next_in(["w"]) and self.next_sound_is("ü")
         ):
-            self.result.append(self.word[self.i : self.i + 2])
+            self.result.append("[ew|yü]")
             self.i += 2
             self.j += 2
         elif self.match_is("x", "k") and self.next_is("i") and self.next_sound_is("sh"):
