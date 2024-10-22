@@ -30,8 +30,10 @@ easy_mark = {
 
 respelling = {
     "iː": "ee",
+    "i": "ee",
     "ɪ": "i",
     "uː": "oo",
+    "u": "oo",
     "ʊ": "uu",
     "ɜː": "ur",
     "ə": "uh",
