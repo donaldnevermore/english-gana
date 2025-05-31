@@ -3,13 +3,13 @@ ipa_to_english_gana = {
     "ɪ": "i",
     "uː": "ü",
     "ʊ": "u",
-    "ɜː": "ë",
-    "ə": "ó",
-    "ɔː": "ö",
-    "ɒ": "o",
+    "ɜː": "ë", # is equal to é
+    "ə": "é",
+    "ɔː": "o",
+    "ɒ": "ô",
     "æ": "â",
     "ʌ": "û",
-    "ɑː": "ä",
+    "ɑː": "a",
     # e
     # a only appears in au.
     # diphthong

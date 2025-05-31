@@ -27,7 +27,7 @@ def test_car():
     a = "car"
     b = "/kɑːr/"
     r = english_gana(a, b)
-    assert r == "c[a|ä]r"
+    assert r == "car"
 
 
 def test_ink():
@@ -90,7 +90,7 @@ def test_water():
     a = "water"
     b = "/ˈwɔːtər/"
     r = english_gana(a, b)
-    assert r == "w[a|ö]t[e|é]r"
+    assert r == "w[a|o]t[e|é]r"
 
 
 def test_yes():
@@ -181,7 +181,7 @@ def test_watch():
     a = "watch"
     b = "/wɑːtʃ/"
     r = english_gana(a, b)
-    assert r == "w[a|ä]tch"
+    assert r == "watch"
 
 
 def test_money():
@@ -279,7 +279,7 @@ def test_cough():
     a = "cough"
     b = "/kɔːf/"
     r = english_gana(a, b)
-    assert r == "c[o|ö][u][g|f][h]"
+    assert r == "co[u][g|f][h]"
 
 
 def test_through():
@@ -352,7 +352,7 @@ def test_dog():
     a = "dog"
     b = "/dɔːɡ/"
     r = english_gana(a, b)
-    assert r == "d[o|ö]g"
+    assert r == "dog"
 
 
 def test_egg():
@@ -499,7 +499,7 @@ def test_yard():
     a = "yard"
     b = "/jɑːrd/"
     r = english_gana(a, b)
-    assert r == "y[a|ä]rd"
+    assert r == "yard"
 
 
 def test_zero():

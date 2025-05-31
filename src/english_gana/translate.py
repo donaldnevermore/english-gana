@@ -2,20 +2,20 @@ from .tokenize import tokenize_ipa
 from .translate_ipa import translate_ipa
 
 letter_to_english_gana = {
-    "a": ["â", "ā", "ä", "e", "ö", "û", "n", "l", "ó"],
+    "a": ["â", "ā", "e", "o", "û", "n", "l", "é"],
     "c": ["k", "s", "ch", "sh"],
     "d": ["t", "j"],
-    "e": ["i", "ï", "ë", "ā", "y", "ü", "n", "l", "ó"],
+    "e": ["i", "ï", "ë", "ā", "y", "ü", "n", "l", "é"],
     "f": ["v"],
     "g": ["j", "f"],
-    "i": ["ī", "ï", "ë", "y", "n", "l", "ó"],
+    "i": ["ī", "ï", "ë", "y", "n", "l", "é"],
     "n": ["ng"],
-    "o": ["ä", "ō", "ö", "ü", "u", "û", "ë", "i", "oi", "au", "n", "l", "ó"],
+    "o": ["a", "ō", "ô", "ü", "u", "û", "ë", "i", "oi", "au", "n", "l", "é"],
     "p": ["f"],
     "q": ["k"],
     "s": ["z", "sh", "zh"],
     "t": ["th", "dh", "ch", "sh"],
-    "u": ["û", "ü", "ë", "e", "y", "i", "n", "l", "ó"],
+    "u": ["û", "ü", "ë", "e", "y", "i", "n", "l", "é"],
     "x": ["k", "z"],
     "y": ["i", "ī"],
 }
@@ -30,12 +30,12 @@ vowels = {
 
 
 vowel_symbols = [
-    # a
+    "a",
     "â",
     "ā",
-    "ä",
     "au",
     "e",
+    "é",
     # ē
     "ë",
     "i",
@@ -43,8 +43,7 @@ vowel_symbols = [
     "ï",
     "o",
     "ō",
-    "ö",
-    "ó",
+    "ô",
     "oi",
     "u",
     "û",
@@ -163,7 +162,7 @@ class EnglishGana:
     def should_eat_two(self) -> bool:
         if self.match_is("a", "ā") and self.next_in(["i", "y"]):
             return True
-        if self.match_is("a", "ö") and self.next_in(["w", "u"]):
+        if self.match_is("a", "o") and self.next_in(["w", "u"]):
             return True
         if self.match_is("e", "ï") and self.next_in(["e", "a"]):
             return True
@@ -215,7 +214,7 @@ class EnglishGana:
             return True
         if self.match_is("n", "ng") and self.next_is("x") and self.next_sound_is("k"):
             return True
-        if self.match_is("o", "ä"):
+        if self.match_is("o", "a"):
             return True
         if self.match_is("y", "i"):
             return True
@@ -232,7 +231,7 @@ class EnglishGana:
 
         # greedy algorithm: eat the longest letters first
         if (
-            self.match_is("o", "ó")
+            self.match_is("o", "é")
             and self.word[self.i + 1 : self.i + 3] == "us"
             and self.next_sound_is("s")
         ):
@@ -313,7 +312,7 @@ class EnglishGana:
             self.result.append("[e|ē]")
             self.i += 1
             self.j += 1
-        elif self.wordi() in vowels and self.soundj() == "ó":
+        elif self.wordi() in vowels and self.soundj() == "é":
             schwa = vowels[self.wordi()]
             self.result.append(f"[{self.wordi()}|{schwa}]")
             self.i += 1
