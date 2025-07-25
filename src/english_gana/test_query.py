@@ -1,6 +1,6 @@
 import pytest
 
-from .query import query_ipa, run, transform_ipa_to_symbol
+#from .query import query_ipa, run, transform_ipa_to_symbol
 
 
 def test_query():

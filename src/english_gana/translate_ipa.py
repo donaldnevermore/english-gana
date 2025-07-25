@@ -3,21 +3,20 @@ ipa_to_english_gana = {
     "ɪ": "i",
     "uː": "ü",
     "ʊ": "u",
-    "ɜː": "ë", # is equal to é
-    "ə": "é",
+    "ɜː": "é", # is equal to ə
+    "ə": "é", # also ê
     "ɔː": "o",
     "ɒ": "ô",
     "æ": "â",
     "ʌ": "û",
     "ɑː": "a",
     # e
-    # a only appears in au.
     # diphthong
-    "eɪ": "ā",
+    "eɪ": "ā", # ei or ëi
     "ɔɪ": "oi",
-    "aɪ": "ī",
-    "əʊ": "ō",
-    "aʊ": "au",
+    "aɪ": "ī", # äi
+    "əʊ": "ō", # öu
+    "aʊ": "äu",
     # ir, ur, er
     # consonant
     "tʃ": "ch",

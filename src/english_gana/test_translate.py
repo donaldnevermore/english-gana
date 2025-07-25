@@ -6,14 +6,14 @@ from .translate import english_gana, english_gana_mark
 def test_english_gana_mark():
     a = "/ˈpɜːrfɪkt/"
     b = english_gana_mark(a)
-    assert "".join(b) == "përfikt"
+    assert "".join(b) == "pérfikt"
 
 
 def test_perfect():
     a = "perfect"
     b = "/ˈpɜːrfɪkt/"
     r = english_gana(a, b)
-    assert r == "p[e|ë]rf[e|i]ct"
+    assert r == "p[e|é]rf[e|i]ct"
 
 
 def test_light():
@@ -373,7 +373,7 @@ def test_girl():
     a = "girl"
     b = "/ɡɜːrl/"
     r = english_gana(a, b)
-    assert r == "g[i|ë]rl"
+    assert r == "g[i|í]rl"
 
 
 def test_house():
@@ -436,7 +436,7 @@ def test_person():
     a = "person"
     b = "/ˈpɜːrsn/"
     r = english_gana(a, b)
-    assert r == "p[e|ë]rs[o|ó]n"
+    assert r == "p[e|é]rs[o|ó]n"
 
 
 def test_quick():

@@ -8,7 +8,7 @@ def test_perfect():
     txt = "/ˈpɜːrfɪkt/"
     s = tokenize_ipa(txt)
     x = translate_ipa(s)
-    assert "".join(x) == "përfikt"
+    assert "".join(x) == "pérfikt"
 
 
 def test_apple():
@@ -36,11 +36,11 @@ def test_girl():
     txt = "/ɡɜːrl/"
     s = tokenize_ipa(txt)
     x = translate_ipa(s)
-    assert "".join(x) == "gërl"
+    assert "".join(x) == "gérl"
 
 
 def test_house():
     txt = "/haʊs/"
     s = tokenize_ipa(txt)
     x = translate_ipa(s)
-    assert "".join(x) == "haus"
+    assert "".join(x) == "häus"

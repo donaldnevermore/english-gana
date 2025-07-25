@@ -5,17 +5,17 @@ letter_to_english_gana = {
     "a": ["â", "ā", "e", "o", "û", "n", "l", "é"],
     "c": ["k", "s", "ch", "sh"],
     "d": ["t", "j"],
-    "e": ["i", "ï", "ë", "ā", "y", "ü", "n", "l", "é"],
+    "e": ["i", "ï", "ā", "y", "ü", "n", "l", "é"],
     "f": ["v"],
     "g": ["j", "f"],
-    "i": ["ī", "ï", "ë", "y", "n", "l", "é"],
+    "i": ["ī", "ï", "y", "n", "l", "é"],
     "n": ["ng"],
-    "o": ["a", "ō", "ô", "ü", "u", "û", "ë", "i", "oi", "au", "n", "l", "é"],
+    "o": ["a", "ō", "ô", "ü", "u", "û", "i", "oi", "äu", "n", "l", "é"],
     "p": ["f"],
     "q": ["k"],
     "s": ["z", "sh", "zh"],
     "t": ["th", "dh", "ch", "sh"],
-    "u": ["û", "ü", "ë", "e", "y", "i", "n", "l", "é"],
+    "u": ["û", "ü", "e", "y", "i", "n", "l", "é"],
     "x": ["k", "z"],
     "y": ["i", "ī"],
 }
@@ -33,11 +33,10 @@ vowel_symbols = [
     "a",
     "â",
     "ā",
-    "au",
+    "äu",
     "e",
     "é",
-    # ē
-    "ë",
+    # ē ê
     "i",
     "ī",
     "ï",
@@ -178,7 +177,7 @@ class EnglishGana:
             return True
         if self.match_is("o", "oi") and self.next_in(["i", "y"]):
             return True
-        if self.match_is("o", "au") and self.next_in(["u", "w"]):
+        if self.match_is("o", "äu") and self.next_in(["u", "w"]):
             return True
         if (
             self.match_is("u", "ü")
