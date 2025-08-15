@@ -258,7 +258,7 @@ def test_obvious():
     a = "obvious"
     b = "/ˈɑːbviəs/"
     r = english_gana(a, b)
-    assert r == "obvi[o][u|ú]s"
+    assert r == "[o|ô]bvi[o][u|ú]s"
 
 
 def test_though():
@@ -300,7 +300,7 @@ def test_anxiety():
     a = "anxiety"
     b = "/æŋˈzaɪəti/"
     r = english_gana(a, b)
-    assert r == "[a|â][n|ng]x[i|ī][e|é]ty"
+    assert r == "[a|â][n|ng][x|z][i|ī][e|é]ty"
 
 
 def test_naughty():
@@ -429,7 +429,7 @@ def test_ox():
     a = "ox"
     b = "/ɑːks/"
     r = english_gana(a, b)
-    assert r == "o[x|ks]"
+    assert r == "[o|ô]x"
 
 
 def test_person():
@@ -492,7 +492,7 @@ def test_xenon():
     a = "xenon"
     b = "/ˈzenɑːn/"
     r = english_gana(a, b)
-    assert r == "xenon"
+    assert r == "[x|z]en[o|ô]n"
 
 
 def test_yard():
