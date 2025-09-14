@@ -41,11 +41,11 @@ respelling = {
     "ɒ": "o",
     "æ": "a",
     "ʌ": "u",
-    "ɑː": "aa",
+    "ɑː": "ah",
     # diphthong
     "eɪ": "ay",
     "ɔɪ": "oy",
-    "aɪ": "y", # also igh
+    "aɪ": "igh",
     "əʊ": "oh",
     "aʊ": "ow",
     # consonant
