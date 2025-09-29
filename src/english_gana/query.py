@@ -6,7 +6,7 @@ from readmdict import MDX
 
 from .translate import english_gana
 
-data_folder = "E:/Monorepos/english-gana/src/data"
+data_folder = "E:/Monorepos/other-projects/english-gana/src/data"
 
 
 def run() -> None:
@@ -106,7 +106,7 @@ class GanaData:
 
     def add_mapping(self, word_type: str, spelling: str, sound: str) -> None:
         if not word_type:
-            word_type = "unknown"
+            word_type = ""
 
         s = spelling.lower()
         if s in self.mapping:

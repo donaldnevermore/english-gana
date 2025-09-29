@@ -223,7 +223,7 @@ def test_digestion():
     a = "digestion"
     b = "/daɪˈdʒestʃən/"
     r = english_gana(a, b)
-    assert r == "d[i|ī][g|j]es[ti|ch][o|ó]n"
+    assert r == "d[i|ī]ˈ[g|j]es[ti|ch][o|ó]n"
 
 
 def test_pencil():
@@ -244,7 +244,7 @@ def test_cetacean():
     a = "cetacean"
     b = "/sɪˈteɪʃn/"
     r = english_gana(a, b)
-    assert r == "c[e|i]t[a|ā][ce|sh][a|á]n"
+    assert r == "c[e|i]ˈt[a|ā][ce|sh][a|á]n"
 
 
 def test_social():
@@ -258,7 +258,7 @@ def test_obvious():
     a = "obvious"
     b = "/ˈɑːbviəs/"
     r = english_gana(a, b)
-    assert r == "[o|ô]bvi[o][u|ú]s"
+    assert r == "[o|ô]bv[i|ï][o][u|ú]s"
 
 
 def test_though():
@@ -300,7 +300,7 @@ def test_anxiety():
     a = "anxiety"
     b = "/æŋˈzaɪəti/"
     r = english_gana(a, b)
-    assert r == "[a|â][n|ng][x|z][i|ī][e|é]ty"
+    assert r == "[a|â][n|ng]ˈ[x|z][i|ī][e|é]ty"
 
 
 def test_naughty():
@@ -471,7 +471,7 @@ def test_update():
     a = "update"
     b = "/ˌʌpˈdeɪt/"
     r = english_gana(a, b)
-    assert r == "[u|û]pd[a|ā]t[e]"
+    assert r == "ˌ[u|û]pˈd[a|ā]t[e]"
 
 
 def test_vowel():

@@ -37,12 +37,11 @@ def tokenize_ipa(txt: str) -> list[str]:
     result: list[str] = []
     sound = remove_slash(txt)
 
-    i = 0
-    while i < len(sound):
-        if sound[i] in ["ˈ", "ˌ"]:
-            i += 1
-            continue
+    i: int = 0
+    if sound[0] == "ˈ":
+        i += 1
 
+    while i < len(sound):
         if is_two_parts(i, sound):
             result.append(sound[i : i + 2])
             i += 2
@@ -58,9 +57,5 @@ def remove_slash(s: str) -> str:
 
 
 def remove_pitch(s: str) -> str:
-    r = s.replace("ˈ", "")
-    return r.replace("ˌ", "")
-
-
-def remove_slash_pitch(s: str) -> str:
-    return remove_pitch(remove_slash(s))
+    r = s.replace("ˌ", "")
+    return r.replace("ˈ", "")

@@ -1,6 +1,6 @@
 import pytest
 
-from .tokenize import remove_slash_pitch, tokenize_ipa
+from .tokenize import tokenize_ipa
 
 
 def test_perfect():
@@ -18,7 +18,7 @@ def test_boy():
 def test_egg():
     a = "/eɡ/"
     s = tokenize_ipa(a)
-    assert "".join(s) == remove_slash_pitch(a)
+    assert s == ["e", "ɡ"]
 
 
 def test_house():

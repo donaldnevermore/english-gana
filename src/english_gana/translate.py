@@ -1,4 +1,4 @@
-from .tokenize import tokenize_ipa
+from .tokenize import tokenize_ipa, remove_pitch
 from .translate_ipa import translate_ipa
 
 letter_to_english_gana = {
@@ -17,7 +17,7 @@ letter_to_english_gana = {
     "t": ["th", "dh", "ch", "sh"],
     "u": ["û", "ü", "e", "y", "i", "n", "l", "é"],
     "x": ["k", "z"],
-    "y": ["i", "ī"],
+    "y": ["ï", "ī"],
 }
 
 vowels = {
@@ -213,7 +213,7 @@ class EnglishGana:
             return True
         if self.match_is("n", "ng") and self.next_is("x") and self.next_sound_is("k"):
             return True
-        if self.match_is("y", "i"):
+        if self.match_is("y", "ï"):
             return True
 
         return False
@@ -285,7 +285,7 @@ class EnglishGana:
             self.result.append(f"[{letters}|sh]")
             self.i += 2
             self.j += 1
-        elif self.match_is("e", "i") and self.next_is("y"):
+        elif self.match_is("e", "ï") and self.next_is("y"):
             self.result.append("[e]y")
             self.i += 2
             self.j += 1
@@ -338,7 +338,10 @@ class EnglishGana:
                     self.result.append(f"[{remain_letters}]")
                 break
 
-            if self.wordi() == self.soundj():
+            if self.soundj() in ["ˌ", "ˈ"]:
+                self.result.append(self.soundj())
+                self.j += 1
+            elif self.wordi() == self.soundj():
                 self.handle_omit()
                 if self.same_next_consonant():
                     self.eat_two_letters()

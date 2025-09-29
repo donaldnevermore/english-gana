@@ -1,15 +1,20 @@
 ipa_to_english_gana = {
     "iː": "ï",
+    "i": "ï",
     "ɪ": "i",
     "uː": "ü",
+    "u": "ü",
     "ʊ": "u",
     "ɜː": "é", # is equal to ə
+    "ɜ": "é",
     "ə": "é", # also ê
     "ɔː": "o",
+    "ɔ": "o",
     "ɒ": "ô",
     "æ": "â",
     "ʌ": "û",
     "ɑː": "a",
+    "ɑ": "a",
     # e
     # diphthong
     "eɪ": "ā", # ei or ëi
@@ -31,6 +36,41 @@ ipa_to_english_gana = {
     # The letters below are the same as in English Gana symbols.
     # b, d, f, h, k, l, m, n, p, r, s, t, v, w, z
     # tr, dr, ts, dz
+}
+
+easy_mark = {
+    "iː": "ee",
+    "i": "ee",
+    "ɪ": "i",
+    "uː": "oo",
+    "u": "oo",
+    "ʊ": "u",
+    "ɜː": "ii",
+    "ɜ": "ii",
+    "ə": "ii",
+    "ɔː": "o",
+    "ɔ": "o",
+    "ɒ": "oe", # British English
+    "æ": "aa",
+    "ʌ": "uu",
+    "ɑː": "a",
+    "ɑ": "a",
+    # diphthong
+    "eɪ": "ei",
+    "ɔɪ": "oi",
+    "aɪ": "ai",
+    "əʊ": "ou",
+    "aʊ": "au",
+    # consonant
+    "tʃ": "ch",
+    "dʒ": "j",
+    "θ": "th",
+    "ð": "dh",
+    "ʃ": "sh",
+    "ʒ": "zh",
+    "j": "y",
+    "ŋ": "ng",
+    "ɡ": "g",
 }
 
 
