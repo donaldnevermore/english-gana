@@ -13,6 +13,7 @@ build/
 dist/
 wheels/
 *.egg-info
+*.whl
 .mypy_cache
 .pytest_cache
 
