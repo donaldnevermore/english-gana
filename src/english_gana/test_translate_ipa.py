@@ -15,7 +15,7 @@ def test_apple():
     txt = "/ˈæpl/"
     s = tokenize_ipa(txt)
     x = translate_ipa(s)
-    assert "".join(x) == "âpl"
+    assert "".join(x) == "ăpl"
 
 
 def test_boy():

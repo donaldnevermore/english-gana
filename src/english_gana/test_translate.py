@@ -76,7 +76,7 @@ def test_up():
     a = "up"
     b = "/ʌp/"
     r = english_gana(a, b)
-    assert r == "[u|û]p"
+    assert r == "[u|ŭ]p"
 
 
 def test_voice():
@@ -139,7 +139,7 @@ def test_judge():
     a = "judge"
     b = "/dʒʌdʒ/"
     r = english_gana(a, b)
-    assert r == "j[u|û]dg[e]"
+    assert r == "j[u|ŭ]dg[e]"
 
 
 def test_sugar():
@@ -188,7 +188,7 @@ def test_money():
     a = "money"
     b = "/ˈmʌni/"
     r = english_gana(a, b)
-    assert r == "m[o|û]n[e]y"
+    assert r == "m[o|ŭ]n[e]y"
 
 
 def test_few():
@@ -216,7 +216,7 @@ def test_action():
     a = "action"
     b = "/ˈækʃn/"
     r = english_gana(a, b)
-    assert r == "[a|â]c[ti|sh][o|ó]n"
+    assert r == "[a|ă]c[ti|sh][o|ó]n"
 
 
 def test_digestion():
@@ -258,7 +258,7 @@ def test_obvious():
     a = "obvious"
     b = "/ˈɑːbviəs/"
     r = english_gana(a, b)
-    assert r == "[o|ô]bv[i|ï][o][u|ú]s"
+    assert r == "[o|ŏ]bv[i|ï][o][u|ú]s"
 
 
 def test_though():
@@ -272,7 +272,7 @@ def test_tough():
     a = "tough"
     b = "/tʌf/"
     r = english_gana(a, b)
-    assert r == "t[o][u|û][g|f][h]"
+    assert r == "t[o][u|ŭ][g|f][h]"
 
 
 def test_cough():
@@ -293,14 +293,14 @@ def test_anxious():
     a = "anxious"
     b = "/ˈæŋkʃəs/"
     r = english_gana(a, b)
-    assert r == "[a|â]n[xi|ksh][o][u|ú]s"
+    assert r == "[a|ă]n[xi|ksh][o][u|ú]s"
 
 
 def test_anxiety():
     a = "anxiety"
     b = "/æŋˈzaɪəti/"
     r = english_gana(a, b)
-    assert r == "[a|â][n|ng]ˈ[x|z][i|ī][e|é]ty"
+    assert r == "[a|ă][n|ng]ˈ[x|z][i|ī][e|é]ty"
 
 
 def test_naughty():
@@ -331,7 +331,7 @@ def test_apple():
     a = "apple"
     b = "/ˈæpl/"
     r = english_gana(a, b)
-    assert r == "[a|â]ppl[e]"
+    assert r == "[a|ă]ppl[e]"
 
 
 def test_boy():
@@ -345,7 +345,7 @@ def test_cat():
     a = "cat"
     b = "/kæt/"
     r = english_gana(a, b)
-    assert r == "c[a|â]t"
+    assert r == "c[a|ă]t"
 
 
 def test_dog():
@@ -408,7 +408,7 @@ def test_lunch():
     a = "lunch"
     b = "/lʌntʃ/"
     r = english_gana(a, b)
-    assert r == "l[u|û]nch"
+    assert r == "l[u|ŭ]nch"
 
 
 def test_music():
@@ -429,7 +429,7 @@ def test_ox():
     a = "ox"
     b = "/ɑːks/"
     r = english_gana(a, b)
-    assert r == "[o|ô]x"
+    assert r == "[o|ŏ]x"
 
 
 def test_person():
@@ -471,7 +471,7 @@ def test_update():
     a = "update"
     b = "/ˌʌpˈdeɪt/"
     r = english_gana(a, b)
-    assert r == "ˌ[u|û]pˈd[a|ā]t[e]"
+    assert r == "ˌ[u|ŭ]pˈd[a|ā]t[e]"
 
 
 def test_vowel():
@@ -492,7 +492,7 @@ def test_xenon():
     a = "xenon"
     b = "/ˈzenɑːn/"
     r = english_gana(a, b)
-    assert r == "[x|z]en[o|ô]n"
+    assert r == "[x|z]en[o|ŏ]n"
 
 
 def test_yard():

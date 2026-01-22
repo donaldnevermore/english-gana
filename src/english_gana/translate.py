@@ -1,23 +1,33 @@
-from .tokenize import tokenize_ipa, remove_pitch
+from .tokenize import tokenize_ipa
 from .translate_ipa import translate_ipa
 
 letter_to_english_gana = {
-    "a": ["â", "ā", "e", "o", "û", "n", "l", "é"],
+    "a": ["a", "ă", "ā", "e", "o", "ŭ", "n", "l", "é"],
+    "b": ["b"],
     "c": ["k", "s", "ch", "sh"],
-    "d": ["t", "j"],
-    "e": ["i", "ï", "ā", "y", "ü", "n", "l", "é"],
-    "f": ["v"],
-    "g": ["j", "f"],
-    "i": ["ī", "ï", "y", "n", "l", "é"],
-    "n": ["ng"],
-    "o": ["a", "ō", "ô", "ü", "u", "û", "i", "oi", "äu", "n", "l", "é"],
-    "p": ["f"],
+    "d": ["d", "t", "j"],
+    "e": ["e", "i", "ï", "ā", "y", "ü", "n", "l", "é"],
+    "f": ["f", "v"],
+    "g": ["g", "j", "f"],
+    "h": ["h"],
+    "i": ["i", "ī", "ï", "y", "n", "l", "é"],
+    "j": ["j"],
+    "k": ["k"],
+    "l": ["l"],
+    "m": ["m"],
+    "n": ["n", "ng"],
+    "o": ["o", "a", "ō", "ŏ", "ü", "u", "ŭ", "i", "oi", "äu", "n", "l", "é"],
+    "p": ["p", "f"],
     "q": ["k"],
-    "s": ["z", "sh", "zh"],
-    "t": ["th", "dh", "ch", "sh"],
-    "u": ["û", "ü", "e", "y", "i", "n", "l", "é"],
+    "r": ["r"],
+    "s": ["s", "z", "sh", "zh"],
+    "t": ["t", "th", "dh", "ch", "sh"],
+    "u": ["u", "ŭ", "ü", "e", "y", "i", "n", "l", "é"],
+    "v": ["v"],
+    "w": ["w"],
     "x": ["k", "z"],
-    "y": ["ï", "ī"],
+    "y": ["y", "ï", "ī"],
+    "z": ["z"],
 }
 
 vowels = {
@@ -31,24 +41,45 @@ vowels = {
 
 vowel_symbols = [
     "a",
-    "â",
+    "ă",
     "ā",
     "äu",
     "e",
     "é",
-    # ē ê
+    # ē
     "i",
     "ī",
     "ï",
     "o",
     "ō",
-    "ô",
+    "ŏ",
     "oi",
     "u",
-    "û",
+    "ŭ",
     # ū
     "ü",
 ]
+
+english_gana_to_respelling = {
+    "ï": "ee",
+    "ü": "oo",
+    "u": "uu",
+    "o": "aw",
+    "ŏ": "o",
+    "ă": "a",
+    "ŭ": "u",
+    "a": "ah",
+    "ā": "ay",
+    "oi": "oy",
+    "ī": "igh",
+    "ō": "oh",
+    "äu": "ow",
+    "á": "uh",
+    "é": "uh",
+    "í": "uh",
+    "ó": "uh",
+    "ú": "uh",
+}
 
 
 def english_gana_mark(ipa: str) -> list[str]:
@@ -66,13 +97,26 @@ class EnglishGana:
     i: int = 0
     j: int = 0
     unresolved_j: int | None = None
+    is_respelling: bool = False
 
-    def __init__(self, word: str, ipa: str) -> None:
+    def __init__(self, word: str, ipa: str, is_respelling: bool = False) -> None:
         self.word = word
+        self.is_respelling = is_respelling
         self.sound = english_gana_mark(ipa)
 
+    def sound_repr(self, gana: str) -> str:
+        if self.is_respelling and gana in english_gana_to_respelling:
+            return english_gana_to_respelling[gana]
+        else:
+            return gana
+
     def eat_a_ruby(self) -> None:
-        self.result.append(f"[{self.wordi()}|{self.soundj()}]")
+        s = self.sound_repr(self.soundj())
+        if s == self.wordi():
+            self.result.append(self.wordi())
+        else:
+            self.result.append(f"[{self.wordi()}|{s}]")
+
         self.i += 1
         self.j += 1
 
@@ -230,7 +274,8 @@ class EnglishGana:
             and self.word[self.i + 1 : self.i + 3] == "us"
             and self.next_sound_is("s")
         ):
-            self.result.append("[o][u|ú]s")
+            s = self.sound_repr("ú")
+            self.result.append(f"[o][u|{s}]s")
             self.i += 3
             self.j += 2
         elif self.match_is("t", "ch") and self.word[self.i + 1 : self.i + 3] == "ch":
@@ -244,7 +289,8 @@ class EnglishGana:
         elif (
             self.match_is("e", "y") and self.next_in(["w"]) and self.next_sound_is("ü")
         ):
-            self.result.append("[ew|yü]")
+            s = self.sound_repr("ü")
+            self.result.append(f"[ew|y{s}]")
             self.i += 2
             self.j += 2
         elif self.match_is("x", "k") and self.next_is("i") and self.next_sound_is("sh"):
@@ -257,19 +303,23 @@ class EnglishGana:
             and self.next_in(["n", "l"])
         ):
             schwa = vowels[self.wordi()]
-            self.result.append(f"[{self.wordi()}|{schwa}]{self.word[self.i+1]}")
+            s = self.sound_repr(schwa)
+            self.result.append(f"[{self.wordi()}|{s}]{self.word[self.i+1]}")
             self.i += 2
             self.j += 1
-        elif self.match_in("o", ["û", "ü", "u"]) and self.next_is("u"):
-            self.result.append(f"[o][u|{self.soundj()}]")
+        elif self.match_in("o", ["ŭ", "ü", "u"]) and self.next_is("u"):
+            s = self.sound_repr(self.soundj())
+            self.result.append(f"[o][u|{s}]")
             self.i += 2
             self.j += 1
         elif self.match_in("s", ["sh", "zh"]) and self.next_is("i"):
-            self.result.append(f"[si|{self.soundj()}]")
+            s = self.sound_repr(self.soundj())
+            self.result.append(f"[si|{s}]")
             self.i += 2
             self.j += 1
         elif self.match_in("t", ["sh", "ch"]) and self.next_is("i"):
-            self.result.append(f"[ti|{self.soundj()}]")
+            s = self.sound_repr(self.soundj())
+            self.result.append(f"[ti|{s}]")
             self.i += 2
             self.j += 1
         elif self.match_is("t", "dh") and self.next_is("h"):
@@ -296,24 +346,29 @@ class EnglishGana:
             self.i += 1
             self.j += 2
         elif self.match_is("u", "y") and self.next_sound_is("ü"):
-            self.result.append("[u|ū]")
+            s = self.sound_repr("ū")
+            self.result.append(f"[u|{s}]")
             self.i += 1
             self.j += 2
         elif self.match_is("u", "y") and self.next_sound_is("u"):
-            self.result.append("[u|yu]")
+            s = self.sound_repr("u")
+            self.result.append(f"[u|y{s}]")
             self.i += 1
             self.j += 2
         elif self.match_is("e", "ï"):
-            self.result.append("[e|ē]")
+            s = self.sound_repr("ē")
+            self.result.append(f"[e|{s}]")
             self.i += 1
             self.j += 1
         elif self.match_is("o", "a"):
-            self.result.append("[o|ô]")
+            s = self.sound_repr("ŏ")
+            self.result.append(f"[o|{s}]")
             self.i += 1
             self.j += 1
         elif self.wordi() in vowels and self.soundj() == "é":
             schwa = vowels[self.wordi()]
-            self.result.append(f"[{self.wordi()}|{schwa}]")
+            s = self.sound_repr(schwa)
+            self.result.append(f"[{self.wordi()}|{s}]")
             self.i += 1
             self.j += 1
         elif self.should_eat_one():
@@ -341,12 +396,6 @@ class EnglishGana:
             if self.soundj() in ["ˌ", "ˈ"]:
                 self.result.append(self.soundj())
                 self.j += 1
-            elif self.wordi() == self.soundj():
-                self.handle_omit()
-                if self.same_next_consonant():
-                    self.eat_two_letters()
-                else:
-                    self.eat_a_letter()
             elif (
                 self.wordi() in letter_to_english_gana
                 and self.soundj() in letter_to_english_gana[self.wordi()]
